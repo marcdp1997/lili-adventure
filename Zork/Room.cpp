@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "Room.h"
-#include "World.h"
 
 void Room::CreateRooms(int num){
 
@@ -12,8 +11,6 @@ void Room::CreateRooms(int num){
 		strcpy_s(description, 200, "You are in an area with a completely destroyed plane.");
 		south = 01;
 		east = 012;
-
-	case 1:
 
 	}
 }

@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "World.h"
-#include "Room.h"
-#include "Path.h"
 
 void World::CreateWorld(){
 
