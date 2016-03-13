@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "World.h"
 
-
 int main(){
 
 	printf("Welcome survivor!\nYour plane had landed here a few days ago.\nYou were unconscious but now you have woken up.\nIt's time to explore this island and arrive to the peak.\nGood luck!\n\n");
