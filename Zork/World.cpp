@@ -16,5 +16,4 @@ void World::CreateWorld(){
 	for (int n = 0; n < 35; n++){
 		Paths[n].CreatePaths(n);
 	}
-	
 }

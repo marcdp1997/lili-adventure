@@ -5,7 +5,6 @@
 #include "Path.h"
 
 class World{
-
 public:
 	Room* Rooms;
 	Path* Paths;
@@ -14,7 +13,6 @@ public:
 
 public:
 	void CreateWorld();
-
 };
 
 #endif

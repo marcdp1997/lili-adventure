@@ -2,7 +2,6 @@
 #define ROOM_H
 
 class Room{
-
 public:
 	int id;
 	char name[50];

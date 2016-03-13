@@ -4,7 +4,6 @@
 #include "World.h"
 
 class Player{
-
 public:
 	char command[20];
 	int curr_position;
@@ -14,6 +13,7 @@ public:
 	void AskPlayer(World Makalu);
 	void MovePlayer(World Makalu);
 	void LookPlayer(World Makalu);
+	void CheckDoor(World Makalu, int i);
 };
 
 #endif

@@ -2,11 +2,10 @@
 #define PATH_H
 
 class Path{
-
 public:
 	int id;
 	char description[200];
-	bool open;
+	char door[10]; // Here I will use: opened, closed or no_door.
 	int source;
 	int destination;
 
