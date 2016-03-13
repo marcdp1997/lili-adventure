@@ -8,6 +8,6 @@ public:
 	Path* Paths;
 
 public:
-	void World::CreateWorld();
+	void CreateWorld();
 
 };
