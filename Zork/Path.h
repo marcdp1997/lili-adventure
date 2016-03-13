@@ -1,8 +1,10 @@
+#ifndef PATH_H
+#define PATH_H
+
 class Path{
 
 public:
 	int id;
-	char name[20];
 	char description[200];
 	bool open;
 	int source;
@@ -11,3 +13,5 @@ public:
 public:
 	void CreatePaths(int num);
 };
+
+#endif

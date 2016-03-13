@@ -1,15 +1,19 @@
-#include "World.h"
+#ifndef PLAYER_H
+#define PLAYER_H
 
-Room* Rooms;
+#include "World.h"
 
 class Player{
 
 public:
 	char command[20];
 	int curr_position;
+	int stopgame;
 
 public:
-	void ChangePosition();
-	void AskPlayer();
-	void MovePlayer();
+	void AskPlayer(World Makalu);
+	void MovePlayer(World Makalu);
+	void LookPlayer(World Makalu);
 };
+
+#endif

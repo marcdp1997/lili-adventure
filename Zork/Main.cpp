@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "World.h"
 #include "Player.h"
+#include "World.h"
+
 
 int main(){
 
@@ -8,8 +9,9 @@ int main(){
 	Makalu.CreateWorld();
 
 	Player One;
-	One.MovePlayer();
-
+	do{
+		One.AskPlayer(Makalu);
+	} while (One.stopgame != 1);
 
 	getchar();
 	return 0;

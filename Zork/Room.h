@@ -1,8 +1,11 @@
+#ifndef ROOM_H
+#define ROOM_H
+
 class Room{
 
 public:
 	int id;
-	char name[20];
+	char name[50];
 	char description[200];
 	int north;
 	int south;
@@ -12,3 +15,5 @@ public:
 public:
 	void CreateRooms(int num);
 };
+
+#endif
