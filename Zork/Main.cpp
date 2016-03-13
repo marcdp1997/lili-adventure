@@ -22,6 +22,9 @@ int main(){
 		One.AskPlayer(Makalu);
 	} while ((One.stopgame != 1) && (Makalu.Rooms[One.curr_position].id != 6));
 
+	delete[] Makalu.Rooms;
+	delete[] Makalu.Paths;
+
 	getchar();
 	return 0;
 }
