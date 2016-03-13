@@ -115,22 +115,6 @@ void Player::MovePlayer(World Makalu){
 // Checking if there is a door in the path. If so, check if it is open or not. Changing curr_position and showing name and desc.
 void Player::CheckDoor(World Makalu, int i){
 
-	if ((strcmp(Makalu.Paths[i].door, "closed") == 0)){
-		printf("The gates are closed!\n");
-		printf("> ");
-		fgets(command, sizeof(command), stdin);
-		// If you want to open
-		if ((strcmp(command, "open\n") == 0) || (strcmp(command, "open gates\n") == 0)){
-			strcpy_s(Makalu.Paths[i].door, 10, "opened");
-			// Opening both paths.
-			for (int x = 0; x < Makalu.num_paths; x++){
-				if ((Makalu.Paths[i].destination == Makalu.Paths[x].source) && (Makalu.Paths[x].destination == Makalu.Paths[i].source))
-					strcpy_s(Makalu.Paths[x].door, 10, "opened");
-			}
-			printf("You have opened the gates.\n\n");
-		}
-	}
-
 	if ((strcmp(Makalu.Paths[i].door, "opened") == 0)){
 		printf("Remember: you left the gates opened; you can ignore it or close them.\n\n");
 		printf("> ");
@@ -150,8 +134,26 @@ void Player::CheckDoor(World Makalu, int i){
 		printf("%s %s\n\n", Makalu.Rooms[curr_position].name, Makalu.Rooms[curr_position].description);
 	}
 
+	else if ((strcmp(Makalu.Paths[i].door, "closed") == 0)){
+		printf("The gates are closed!\n");
+		printf("> ");
+		fgets(command, sizeof(command), stdin);
+		// If you want to open
+		if ((strcmp(command, "open\n") == 0) || (strcmp(command, "open gates\n") == 0)){
+			strcpy_s(Makalu.Paths[i].door, 10, "opened");
+			// Opening both paths.
+			for (int x = 0; x < Makalu.num_paths; x++){
+				if ((Makalu.Paths[i].destination == Makalu.Paths[x].source) && (Makalu.Paths[x].destination == Makalu.Paths[i].source))
+					strcpy_s(Makalu.Paths[x].door, 10, "opened");
+			}
+			printf("You have opened the gates.\n\n");
+		}
+		//Changing curr_position
+		curr_position = Makalu.Paths[i].destination;
+		printf("%s %s\n\n", Makalu.Rooms[curr_position].name, Makalu.Rooms[curr_position].description);
+	}
 	// If there is no_door, then we only change position
-	if ((strcmp(Makalu.Paths[i].door, "no_door") == 0)){
+	else if ((strcmp(Makalu.Paths[i].door, "no_door") == 0)){
 		curr_position = Makalu.Paths[i].destination;
 		printf("%s %s\n\n", Makalu.Rooms[curr_position].name, Makalu.Rooms[curr_position].description);
 	}
