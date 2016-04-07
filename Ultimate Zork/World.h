@@ -3,16 +3,21 @@
 
 #include "Room.h"
 #include "Path.h"
+#include "Player.h"
 
-class World{
+#define NUM_ROOMS 16
+#define NUM_PATHS 34
+
+class World
+{
 public:
 	Room* Rooms;
 	Path* Paths;
-	int num_rooms;
-	int num_paths;
+	Player* player; 
 
 public:
-	void CreateWorld();
+	World();
+	~World();
 };
 
 #endif
