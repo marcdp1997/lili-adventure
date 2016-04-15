@@ -33,7 +33,9 @@ World::World()
 }
 
 World::~World()
-{}
+{
+	//Entities.clear();
+}
 
 void World::Ask()
 {
@@ -44,4 +46,18 @@ void World::Ask()
 		command.GetWord(5);
 		player->Move(command, Entities);
 	}
+
+	else if ((command == "look north\n") || (command == "look south\n") || (command == "look east\n") || (command == "look west\n"))
+	{
+		command.GetWord(5);
+		player->LookPath(command, Entities);
+	}
+
+	else if ((command == "pick item 1\n") || (command == "pick item 2\n"))
+	{
+		command.GetWord(5);
+		player->Pick(command, Entities);
+	}
+
 }
+
