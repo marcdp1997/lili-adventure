@@ -35,9 +35,26 @@ void String::GetString()
 	fgets(string, mem_size, stdin);
 }
 
+void String::GetWord(const int from)
+{
+	int i = 0, j = from;
+	for ( ; string[j] != '\n'; i++, j++)
+		string[i] = string[j];
+
+	string[0] = string[0] - 32;
+	string[i] = '\0';
+}
+
 bool String::operator== (const char *other) const
 {
 	if (strcmp(string, other)) return 0;
+	else return 1;
+	// If it's 1 they are defferent.
+}
+
+bool String::operator== (const String& other) const
+{
+	if (strcmp(string, other.string)) return 0;
 	else return 1;
 	// If it's 1 they are defferent.
 }

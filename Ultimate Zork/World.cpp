@@ -14,6 +14,12 @@ World::World()
 		Paths[i].CreatePaths(i);
 	}
 
+	Items = new Item[NUM_ITEMS];
+	for (int i = 0; i < NUM_ITEMS; i++)
+	{
+		Items[i].CreateItems(i);
+	}
+
 	player = new Player; // Right now there is only 1 player
 }
 
@@ -21,5 +27,6 @@ World::~World()
 {
 	delete[] Rooms;
 	delete[] Paths;
+	delete[] Items;
 	delete player;
 }

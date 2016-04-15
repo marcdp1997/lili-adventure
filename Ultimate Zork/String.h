@@ -11,15 +11,17 @@ private:
 	unsigned int mem_size;
 public:
 	String();
-	String(const char* str); // For C strings
+	String(const char* str); 
 	~String();
 
 	unsigned int Length() const;
 	void GetString();
+	void GetWord(const int from);  // This fcn cuts a string
 
-	bool String::operator== (const char *other) const; // For C strings
-	bool String::operator!= (const char *other) const; // For C strings
-	const String& String::operator= (const char* str); // For C strings
+	bool String::operator== (const char *other) const; 
+	bool String::operator== (const String& other) const;
+	bool String::operator!= (const char *other) const;
+	const String& String::operator= (const char* str); 
 };
 
 #endif

@@ -1,15 +1,17 @@
 #ifndef PATH_H
 #define PATH_H
 
-#include "String.h"
+#include "Base.h"
 
-class Path{
+enum coords {north, south, east, west};
+
+class Path : public Base
+{
 public:
-	int id;
-	String description;
 	int door; // No door == 0, opened == 1, closed == 2;
 	int source;
 	int destination;
+	enum coords direction;
 
 public:
 	void CreatePaths(const int num);

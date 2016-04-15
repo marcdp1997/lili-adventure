@@ -4,9 +4,11 @@
 #include "Room.h"
 #include "Path.h"
 #include "Player.h"
+#include "Item.h"
 
 #define NUM_ROOMS 16
-#define NUM_PATHS 34
+#define NUM_PATHS 35
+#define NUM_ITEMS 5
 
 class World
 {
@@ -14,10 +16,11 @@ public:
 	Room* Rooms;
 	Path* Paths;
 	Player* player; 
+	Item* Items;
 
 public:
 	World();
-	~World();
+	virtual ~World();
 };
 
 #endif

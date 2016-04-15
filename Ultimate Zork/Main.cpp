@@ -6,8 +6,6 @@ int main()
 {
 	World Island;
 	Action Game;
-	
-	Game.Tutorial(Island);
 
 	do{
 		Game.Ask(Island);
