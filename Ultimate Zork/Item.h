@@ -1,16 +1,17 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Base.h"
+#include "Entity.h"
+class Room;
 
-class Item : public Base
+class Item : public Entity
 {
 public:
-	String name;
-	int room; // Which room.id is located the item
-	bool picked; // 1 == true, 0 == false
+	Room* location; // Which room is located the item
+	bool picked; // 0 == not picked, 1 == picked
 public:
-	void CreateItems(const int num);
+	Item(const char* name, const char* description, Room* location);
+	~Item();
 };
 
 #endif

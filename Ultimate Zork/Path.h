@@ -1,20 +1,22 @@
 #ifndef PATH_H
 #define PATH_H
 
-#include "Base.h"
+#include "Entity.h"
 
-enum coords {north, south, east, west};
+class Room;
+enum Status { NO_DOOR, OPEN, CLOSE };
 
-class Path : public Base
+class Path : public Entity
 {
 public:
-	int door; // No door == 0, opened == 1, closed == 2;
-	int source;
-	int destination;
-	enum coords direction;
+	Room* source;
+	Room* destination;
+	String direction;
+	Status door;
 
 public:
-	void CreatePaths(const int num);
+	Path(const char* name, const char* description, Room* source, Room* destination, const char* direction, Status door);
+	virtual ~Path();
 };
 
 #endif

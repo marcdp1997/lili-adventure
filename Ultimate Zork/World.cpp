@@ -1,32 +1,47 @@
 #include "World.h"
+#include "Item.h"
+#include "Path.h"
+#include "Room.h"
+#include "Player.h"
 
 World::World()
 {
-	Rooms = new Room[NUM_ROOMS];
-	for (int i = 0; i < NUM_ROOMS; i++)
-	{
-		Rooms[i].CreateRooms(i);
-	}
+	// Rooms
+	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure");
+	Room* lake = new Room("Lake", "Big lake with some fish.\nA river ends with a strong current in the west part");
 
-	Paths = new Path[NUM_PATHS];
-	for (int i = 0; i < NUM_PATHS; i++)
-	{
-		Paths[i].CreatePaths(i);
-	}
+	Entities.pushback(crashed_airplane);
+	Entities.pushback(lake);
 
-	Items = new Item[NUM_ITEMS];
-	for (int i = 0; i < NUM_ITEMS; i++)
-	{
-		Items[i].CreateItems(i);
-	}
+	// Paths
+	Path* route_1f = new Path("Route 1", "It seems to be water there", crashed_airplane, lake, "South", NO_DOOR);
+	Path* route_1b = new Path("Route 1", "Something is burning", lake, crashed_airplane, "North", NO_DOOR);
 
-	player = new Player; // Right now there is only 1 player
+	Entities.pushback(route_1f);
+	Entities.pushback(route_1b);
+
+	// Items
+	Item* item_1 = new Item("Item 1", "Random item 1", crashed_airplane);
+	Item* item_2 = new Item("Item 2", "Random item 2", crashed_airplane);
+
+	Entities.pushback(item_1);
+	Entities.pushback(item_2);
+
+	// Player
+	player = new Player("Marc", "The character is brave and strong", crashed_airplane);
+	Entities.pushback(player);
 }
 
 World::~World()
+{}
+
+void World::Ask()
 {
-	delete[] Rooms;
-	delete[] Paths;
-	delete[] Items;
-	delete player;
+	command.GetString();
+
+	if ((command == "move north\n") || (command == "move south\n") || (command == "move east\n") || (command == "move west\n"))
+	{
+		command.GetWord(5);
+		player->Move(command, Entities);
+	}
 }

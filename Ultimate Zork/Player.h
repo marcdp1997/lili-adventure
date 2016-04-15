@@ -3,17 +3,19 @@
 
 #define INV_CAPACITY 3
 
-#include "Item.h"
+#include "Entity.h"
+class Room;
 
-class Player
+class Player : public Entity
 {
 public:
-	int curr_pos;
-	Item* inventory;
-	int last_item;
+	Room* curr_pos;
+	int last_item = 0;
 public: 
-	Player();
+	Player(const char* name, const char* description, Room* curr_pos);
 	virtual ~Player();
+
+	void Player::Move(String& command, const Vector<Entity*>& Entities);
 };
 
 #endif

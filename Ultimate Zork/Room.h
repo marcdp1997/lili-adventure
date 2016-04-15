@@ -1,16 +1,13 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "Base.h"
+#include "Entity.h"
 
-class Room : public Base
+class Room : public Entity
 {
 public:
-	int id;
-	String name;
-
-public:
-	void CreateRooms(const int num);
+	Room(const char* title, const char* description);
+	virtual ~Room();
 };
 
 #endif
