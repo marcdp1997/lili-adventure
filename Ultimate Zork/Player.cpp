@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Path.h"
 #include "Item.h"
+#include "Room.h"
 
 Player::Player(const char* name, const char* description, Room* room) :
 Entity(name, description, PLAYER),
@@ -12,7 +13,7 @@ curr_pos(room)
 Player::~Player()
 {}
 
-void Player::Move(const String& command, const Vector<Entity*>& Entities)
+void Player::Move(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
 	for (int i = 0; i < Entities.num_elements; i++)
 	{
@@ -22,11 +23,11 @@ void Player::Move(const String& command, const Vector<Entity*>& Entities)
 		{
 			Path* p = (Path*)aux;
 			
-			if ((curr_pos == p->source) && (command == p->direction))
+			if ((curr_pos == p->source) && (tokens.buffer[1] == p->direction))
 			{
-				if ((p->door == NO_DOOR) || (p->door == OPEN)) curr_pos = p->destination;
-				else if (p->door == CLOSE) printf("The gates are close. Open them to move forward.\n\n");
+				if (p->door == CLOSE) printf("The gates are closed. Open them to move forward.\n\n");
 				if (p->door == OPEN) printf("The gates are open. You can close them if you want.\n\n");
+				if ((p->door == NO_DOOR) || (p->door == OPEN)) Update(p);
 				break;
 			}
 		}
@@ -34,7 +35,7 @@ void Player::Move(const String& command, const Vector<Entity*>& Entities)
 	}
 }
 
-void Player::LookPath(const String& command, const Vector<Entity*>& Entities)
+void Player::LookPath(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
 	for (int i = 0; i < Entities.num_elements; i++)
 	{
@@ -44,7 +45,7 @@ void Player::LookPath(const String& command, const Vector<Entity*>& Entities)
 		{
 			Path* p = (Path*)aux;
 
-			if ((curr_pos == p->source) && (command == p->direction))
+			if ((curr_pos == p->source) && (tokens.buffer[1] == p->direction))
 			{
 				printf("%s. %s.\n\n", p->name.string, p->description.string);
 				break;
@@ -54,7 +55,7 @@ void Player::LookPath(const String& command, const Vector<Entity*>& Entities)
 	}
 }
 
-void Player::Pick(const String& command, const Vector<Entity*>& Entities)
+void Player::Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
 	for (int i = 0; i < Entities.num_elements; i++)
 	{
@@ -64,15 +65,21 @@ void Player::Pick(const String& command, const Vector<Entity*>& Entities)
 		{
 			Item* i = (Item*)aux;
 
-			if ((i->picked == 0) && (command == i->name) && (i->location == curr_pos))
+			if ((i->picked == 0) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
 			{
 				if (bag.num_elements < INV_CAPACITY)
 				{
 					bag.pushback(i);
-					printf("You put %s in your bag.\n\n", command.string);
+					printf("You put %s in your bag.\n\n", tokens.buffer[1]);
 					i->picked = 1;
+
 				}
 				else printf("Your inventory is full.\n\n");
+				break;
+			}
+			else if ((i->picked == 1) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
+			{
+				printf("You added this item before.\n\n");
 				break;
 			}
 		}
@@ -80,14 +87,19 @@ void Player::Pick(const String& command, const Vector<Entity*>& Entities)
 	}
 }
 
-void Player::Drop(const String& command, const Vector<Entity*>& Entities)
+void Player::Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
-	for (int i = 0; i < Entities.num_elements; i++)
+	for (int i = 0; i < bag.num_elements; i++)
 	{
-		// If name of the item that is in the vector == command && picked == 1
-		// bag.pop(i)
-
-		if (i == Entities.num_elements - 1) printf("%s is not in your inventory\n\n", command.string);
+		if ((tokens.buffer[1] == bag.buffer[i]->name) && (bag.buffer[i]->picked == 1))
+		{
+			bag.buffer[i]->picked = 0;
+			bag.buffer[i]->location = curr_pos;
+			bag.pop(i);
+			printf("Now %s is NOT in your inventory.\n\n", tokens.buffer[1].string);
+			break;
+		}
+		if (i == bag.num_elements - 1) printf("Can't find %s in your inventory.\n\n", tokens.buffer[1].string);
 	}
 }
 
@@ -111,12 +123,32 @@ void Player::Door(const enum Status& door, const Vector<Entity*>& Entities)
 					if ((curr_pos == p->source) && (p->destination == p2->source) && (p2->destination == p->source))
 					{
 						p->door = door; p2->door = door;
-						if (door == OPEN) curr_pos = p->destination;
+						if (door == OPEN) Update(p);
 						break;
 					}
 				}
 			}
 		}
+	}
+}
+
+void Player::Update(const Path* p)
+{
+	curr_pos = p->destination;
+	printf("%s. %s.\n\n", curr_pos->name.string, curr_pos->description.string);
+}
+
+void Player::LookBag() const
+{
+	if (bag.num_elements == 0) printf("Your bag is empty.\n\n");
+	else
+	{
+		printf("In the bag you have: ");
+		for (int i = 0; i < bag.num_elements; i++)
+		{
+			printf("\n   -%s (%s)", bag.buffer[i]->name.string, bag.buffer[i]->description.string);
+		}
+		printf("\n\n");
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "Entity.h"
 class Room;
 class Item;
+class Path;
 
 class Player : public Entity
 {
@@ -19,11 +20,13 @@ public:
 	Player(const char* name, const char* description, Room* curr_pos);
 	virtual ~Player();
 
-	void Move(const String& command, const Vector<Entity*>& Entities);
-	void LookPath(const String& command, const Vector<Entity*>& Entities);
-	void Pick(const String& command, const Vector<Entity*>& Entities);
-	void Drop(const String& command, const Vector<Entity*>& Entities);
+	void Move(const Vector <String>& tokens, const Vector<Entity*>& Entities);
+	void LookPath(const Vector <String>& tokens, const Vector<Entity*>& Entities);
+	void Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities);
+	void Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	void Door(const enum Status& door, const Vector<Entity*>& Entities);
+	void Update(const Path* p);
+	void LookBag() const;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define STRING_H
 
 #include <string.h>
+#include "Vector.h"
 
 class String
 {
@@ -15,13 +16,13 @@ public:
 	~String();
 
 	unsigned int Length() const;
-	void GetString();
-	void GetWord(const int from);  // This fcn cuts a string
 
-	bool String::operator== (const char *other) const; 
-	bool String::operator== (const String& other) const;
-	bool String::operator!= (const char *other) const;
-	const String& String::operator= (const char* str); 
+	bool operator== (const char *other) const; 
+	bool operator== (const String& other) const;
+	bool operator!= (const char *other) const;
+	const String& operator= (const char* str); 
+	void Tokenize(Vector<String>& tokens);
+	void GetWord(const int num);
 };
 
 #endif

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "World.h"
+#include "Player.h"
+#include "Room.h"
 
 int main()
 {
@@ -8,7 +10,9 @@ int main()
 	int i = 0;
 	do{
 		Island.Ask();
-	} while (i == 0);
+	} while ((Island.player->curr_pos->name != "Peak") && (Island.stop == 0));
+
+	printf("Thanks for playing!\n\n");
 
 	getchar();
 	return 0;

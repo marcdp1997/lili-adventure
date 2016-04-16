@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <assert.h>
+#include "String.h"
 
 template <class TYPE>
 #define uint unsigned int
@@ -39,7 +40,7 @@ public:
 		delete[] buffer;
 	}
 
-	void pushback(const TYPE num)
+	void pushback(const TYPE& data)
 	{
 		TYPE* aux;
 		if (num_elements == capacity)
@@ -51,11 +52,11 @@ public:
 			buffer = aux;
 		}
 
-		buffer[num_elements] = num;
+		buffer[num_elements] = data;
 		num_elements++;
 	}
 
-	void pushfront(const TYPE num)
+	void pushfront(const TYPE& data)
 	{
 		if (num_elements == capacity)
 		{
@@ -67,7 +68,7 @@ public:
 		}
 
 		for (int i = num_elements; i > 0; i--) buffer[i] = buffer[i - 1];
-		buffer[0] = num;
+		buffer[0] = data;
 		num_elements++;
 	}
 
@@ -93,16 +94,13 @@ public:
 		else return false;
 	}
 
-	bool pop(TYPE& data, const uint num)
+	void pop(const uint num)
 	{
 		if (num_elements > 0)
 		{
-			data = buffer[num];
 			for (int i = num; i < num_elements; i++) buffer[i] = buffer[i + 1];
 			num_elements--;
-			return true;
 		}
-		else return false;
 	}
 
 	TYPE& operator[] (uint index)

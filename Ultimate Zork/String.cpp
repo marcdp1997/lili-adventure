@@ -29,34 +29,60 @@ unsigned int String::Length() const
 	return strlen(string);
 }
 
-void String::GetString()
+void String::Tokenize(Vector<String>& tokens)
 {
 	printf("> ");
 	fgets(string, mem_size, stdin);
-}
 
-void String::GetWord(const int from)
-{
-	int i = 0, j = from;
-	for ( ; string[j] != '\n'; i++, j++)
-		string[i] = string[j];
+	int num_words = 1;
 
-	string[0] = string[0] - 32;
-	string[i] = '\0';
+	for (int i = 0; string[i] != '\0'; i++)
+	{
+		if ((string[i] > 'A') && (string[i] < 'Z')) string[i] = string[i] + 32;
+		if (string[i] == ' ') num_words++;
+	}
+
+	char aux[20];
+	strcpy_s(aux, 20, string);
+
+	for (int i = 1; i <= num_words; i++)
+	{
+		int word = 0;
+		for (int j = 0; aux[j] != '\0'; j++)
+		{
+			if ((aux[j] == ' ') || (aux[j] == '\n'))
+			{
+				word++;
+
+				if (word == i)
+				{
+					aux[j] = '\0';
+					break;
+				}
+				else
+				{
+					int i2, j2;
+					for (i2 = 0, j2 = j + 1; aux[j2] != '\n'; i2++, j2++) 
+						aux[i2] = aux[j2];
+					aux[i2] = '\0';
+				}
+			}
+		}
+		tokens.buffer[i - 1] = aux;
+		strcpy_s(aux, 20, string);
+	}
 }
 
 bool String::operator== (const char *other) const
 {
 	if (strcmp(string, other)) return 0;
 	else return 1;
-	// If it's 1 they are defferent.
 }
 
 bool String::operator== (const String& other) const
 {
 	if (strcmp(string, other.string)) return 0;
 	else return 1;
-	// If it's 1 they are defferent.
 }
 
 bool String::operator!= (const char *other) const

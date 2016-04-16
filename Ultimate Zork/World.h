@@ -7,14 +7,17 @@ class Player;
 class World
 {
 public:
+	int stop;
 	String command;
-	Player* player;
+	Vector<String> tokens;
 	Vector<Entity*> Entities;
+	Player* player;
 
 public:
 	World();
 	virtual ~World();
 	void Ask();
+	void Help() const;
 };
 
 #endif

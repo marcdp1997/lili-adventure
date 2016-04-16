@@ -14,16 +14,16 @@ World::World()
 	Entities.pushback(lake);
 
 	// Paths
-	Path* route_1f = new Path("Route 1", "It seems to be water there", crashed_airplane, lake, "South", CLOSE);
-	Path* route_1b = new Path("Route 1", "Something is burning", lake, crashed_airplane, "North", CLOSE);
+	Path* route_1f = new Path("Route 1", "It seems to be water there", crashed_airplane, lake, "south", CLOSE);
+	Path* route_1b = new Path("Route 1", "Something is burning", lake, crashed_airplane, "north", CLOSE);
 
 	Entities.pushback(route_1f);
 	Entities.pushback(route_1b);
 
 	// Items
-	Item* item_1 = new Item("Item 1", "Random item 1", crashed_airplane);
-	Item* item_2 = new Item("Item 2", "Random item 2", crashed_airplane);
-	Item* item_3 = new Item("Item 3", "Random item 3", crashed_airplane);
+	Item* item_1 = new Item("sword", "Random item 1", crashed_airplane);
+	Item* item_2 = new Item("shield", "Random item 2", crashed_airplane);
+	Item* item_3 = new Item("horse", "Random item 3", crashed_airplane);
 
 	Entities.pushback(item_1);
 	Entities.pushback(item_2);
@@ -41,45 +41,66 @@ World::~World()
 
 void World::Ask()
 {
-	command.GetString();
+	command.Tokenize(tokens);
 
-	if ((command == "move north\n") || (command == "move south\n") || (command == "move east\n") || (command == "move west\n"))
+	if (tokens.buffer[0] == "move" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west"))
 	{
-		command.GetWord(5);
-		player->Move(command, Entities);
+		player->Move(tokens, Entities);
 	}
 
-	else if ((command == "look north\n") || (command == "look south\n") || (command == "look east\n") || (command == "look west\n"))
+	else if (tokens.buffer[0] == "look" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west"))
 	{
-		command.GetWord(5);
-		player->LookPath(command, Entities);
+		player->LookPath(tokens, Entities);
 	}
 
-	else if ((command == "open gates\n") || (command == "open\n"))
+	else if (tokens.buffer[0] == "look" && tokens.buffer[1] == "room")
 	{
-		player->Door(OPEN, Entities);
+		printf("%s. %s.\n\n", player->curr_pos->name.string, player->curr_pos->description.string);
+	}
+
+	else if ((tokens.buffer[0] == "open") || ((tokens.buffer[0] == "open") && (tokens.buffer[1] == "gates")))
+	{
 		printf("You have opened the gates.\n\n");
+		player->Door(OPEN, Entities);
 	}
 
-	else if ((command == "close gates\n") || (command == "close\n"))
+	else if ((tokens.buffer[0] == "close") || ((tokens.buffer[0] == "close") && (tokens.buffer[1] == "gates")))
 	{
-		player->Door(CLOSE, Entities);
 		printf("You have closed the gates.\n\n");
+		player->Door(CLOSE, Entities);
 	}
 
-	else if ((command == "pick item 1\n") || (command == "pick item 2\n") || (command == "pick item 3\n"))
+	else if (tokens.buffer[0] == "pick")
 	{
-		command.GetWord(5);
-		player->Pick(command, Entities);
+		player->Pick(tokens, Entities);
 	}
 
-	else if ((command == "drop item 1\n") || (command == "drop item 2\n") || (command == "drop item 3\n"))
+	else if (tokens.buffer[0] == "drop")
 	{
-		command.GetWord(5);
-		player->Drop(command, Entities);
+		player->Drop(tokens, Entities);
 	}
 
-	else printf("Command not recogized\n\n");
+	else if (tokens.buffer[0] == "look" && tokens.buffer[1] == "bag")
+	{
+		player->LookBag();
+	}
+
+	else if (tokens.buffer[0] == "help")
+	{
+		Help();
+	}
+
+	else if (tokens.buffer[0] == "quit") stop = 1;
+
+	else printf("Command not recogized.\n\n");
 
 }
 
+void World::Help() const
+{
+	printf("To move: move (north, south, east, west).\nTo look: look (north, south, east, west, room or bag).\n\n");
+	printf("To pick items: pick (name of the item).\n");
+	printf("To drop items: drop (name of the item).\n\n");
+	printf("For close/open gates: open (or open gates), close (or close gates).\n\n");
+	printf("To see the commands: help.\nTo end game: quit.\n\n");
+}
