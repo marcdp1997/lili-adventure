@@ -7,3 +7,4 @@ source(source), destination(destination), door(door), direction(direction)
 
 Path::~Path()
 {}
+

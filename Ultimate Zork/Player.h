@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define INV_CAPACITY 1
+#define INV_CAPACITY 2
 
 #include "Entity.h"
 class Room;
@@ -13,17 +13,17 @@ public:
 	Room* curr_pos;
 
 	//Inventory ---
-	uint capacity = INV_CAPACITY;
-	Vector<Item*> inventory(uint capacity);
-	int last_item = 0;
+	Vector<Item*> bag;
 
 public: 
 	Player(const char* name, const char* description, Room* curr_pos);
 	virtual ~Player();
 
-	void Player::Move(String& command, const Vector<Entity*>& Entities);
-	void Player::LookPath(String& command, const Vector<Entity*>& Entities);
-	void Player::Pick(String& command, const Vector<Entity*>& Entities);
+	void Move(const String& command, const Vector<Entity*>& Entities);
+	void LookPath(const String& command, const Vector<Entity*>& Entities);
+	void Pick(const String& command, const Vector<Entity*>& Entities);
+	void Drop(const String& command, const Vector<Entity*>& Entities);
+	void Door(const enum Status& door, const Vector<Entity*>& Entities);
 };
 
 #endif

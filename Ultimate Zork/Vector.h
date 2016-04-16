@@ -93,9 +93,21 @@ public:
 		else return false;
 	}
 
+	bool pop(TYPE& data, const uint num)
+	{
+		if (num_elements > 0)
+		{
+			data = buffer[num];
+			for (int i = num; i < num_elements; i++) buffer[i] = buffer[i + 1];
+			num_elements--;
+			return true;
+		}
+		else return false;
+	}
+
 	TYPE& operator[] (uint index)
 	{
-		assert(index < num_element);
+		assert(index < num_elements);
 		return buffer[index];
 	}
 
