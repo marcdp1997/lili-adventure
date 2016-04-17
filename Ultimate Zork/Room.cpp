@@ -1,7 +1,11 @@
 #include "Room.h"
+#include "Item.h"
 
-Room::Room(const char* title, const char* description) : Entity(title, description, ROOM)
-{}
+Room::Room(const char* name, const char* description) : Entity(name, description)
+{
+	type = ROOM;
+	inventory = NULL;
+}
 
 Room::~Room()
 {}

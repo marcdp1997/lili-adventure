@@ -10,7 +10,7 @@ public:
 	int stop;
 	String command;
 	Vector<String> tokens;
-	Vector<Entity*> Entities;
+	Vector<Entity*> entities;
 	Player* player;
 
 public:

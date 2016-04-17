@@ -3,10 +3,12 @@
 
 #include "Entity.h"
 
+class Item;
+
 class Room : public Entity
 {
 public:
-	Room(const char* title, const char* description);
+	Room(const char* name, const char* description);
 	virtual ~Room();
 };
 

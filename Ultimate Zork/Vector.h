@@ -35,7 +35,7 @@ public:
 		buffer = new TYPE[capacity];
 	}
 
-	~Vector()
+	virtual ~Vector()	
 	{
 		delete[] buffer;
 	}
@@ -115,7 +115,13 @@ public:
 		return buffer[index];
 	}
 
-	// Empty, clean(destroy all the elements), size, capacity, at(), shrink_to_fit();
+	void Clean() const
+	{
+		for (int i = num_elements - 1; i >= 0; --i)
+			delete buffer[i];
+	}
+
+	// Empty, size, capacity, at(), shrink_to_fit();
 };
 
 #endif //VECTOR_H

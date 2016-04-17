@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "String.h"
 
-#define BUFFER 20
+#define BUFFER 50
 
 String::String()
 {
@@ -42,15 +42,15 @@ void String::Tokenize(Vector<String>& tokens)
 		if (string[i] == ' ') num_words++;
 	}
 
-	char aux[20];
-	strcpy_s(aux, 20, string);
+	char aux[50];
+	strcpy_s(aux, 50, string);
 
 	for (int i = 1; i <= num_words; i++)
 	{
 		int word = 0;
-		for (int j = 0; aux[j] != '\0'; j++)
+		for (int j = 0; j < 50; j++)
 		{
-			if ((aux[j] == ' ') || (aux[j] == '\n'))
+			if ((aux[j] == ' ') || (aux[j] == '\0'))
 			{
 				word++;
 
@@ -65,11 +65,12 @@ void String::Tokenize(Vector<String>& tokens)
 					for (i2 = 0, j2 = j + 1; aux[j2] != '\n'; i2++, j2++) 
 						aux[i2] = aux[j2];
 					aux[i2] = '\0';
+					j = 0;
 				}
 			}
 		}
 		tokens.buffer[i - 1] = aux;
-		strcpy_s(aux, 20, string);
+		strcpy_s(aux, 50, string);
 	}
 }
 

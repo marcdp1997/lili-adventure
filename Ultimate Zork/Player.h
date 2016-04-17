@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define INV_CAPACITY 2
+#define INV_CAPACITY 4
 
 #include "Entity.h"
 class Room;
@@ -12,10 +12,7 @@ class Player : public Entity
 {
 public:
 	Room* curr_pos;
-
-	//Inventory ---
-	Vector<Item*> inventory;
-	Item* equip_item;
+	Item* equip_item = nullptr;
 
 public: 
 	Player(const char* name, const char* description, Room* curr_pos);
@@ -30,6 +27,10 @@ public:
 	void Door(const enum Status& door, const Vector<Entity*>& Entities);
 	void Update(const Path* p);
 	void Inventory(const Vector <String>& tokens) const;
+	void Bag() const;
+	void PutInto(const Vector <String>& tokens);
+	void GetFrom(const Vector <String>& tokens);
+	void TurnOnGPS(const Vector<Entity*>& Entities);
 };
 
 #endif

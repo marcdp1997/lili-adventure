@@ -13,7 +13,7 @@ private:
 public:
 	String();
 	String(const char* str); 
-	~String();
+	virtual ~String();
 
 	unsigned int Length() const;
 

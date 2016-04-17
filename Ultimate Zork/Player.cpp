@@ -4,11 +4,12 @@
 #include "Room.h"
 
 Player::Player(const char* name, const char* description, Room* room) :
-Entity(name, description, PLAYER),
+Entity(name, description),
 curr_pos(room)
 {
-	Vector<Item*> inventory(INV_CAPACITY);
+	type = PLAYER;
 	equip_item = nullptr;
+	inventory = new Vector<Item*>(INV_CAPACITY);
 }
 
 Player::~Player()
@@ -66,79 +67,78 @@ void Player::Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities
 		{
 			Item* i = (Item*)aux;
 
-			if ((i->pick == 0) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
+			if ((!i->pick) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
 			{
-				if (inventory.num_elements < INV_CAPACITY)
+				if (inventory->num_elements < INV_CAPACITY)
 				{
-					inventory.pushback(i);
-					printf("You add %s in your inventory.\n\n", tokens.buffer[1]);
-					i->pick = 1;
+					inventory->pushback(i);
+					printf("You add %s in your inventory.\n\n", tokens.buffer[1].string);
+					i->pick = true;
 
 				}
 				else printf("Your inventory is full.\n\n");
 				break;
 			}
-			else if ((i->pick == 1) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
+			else if ((i->pick) && (i->name == tokens.buffer[1]) && (i->location == curr_pos))
 			{
 				printf("You added this item before.\n\n");
 				break;
 			}
 		}
-		else if (i == Entities.num_elements - 1) printf("No item found.\n\n");
+		else if (i == Entities.num_elements - 1) printf("Item not found.\n\n");
 	}
 }
 
 void Player::Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
-	for (int i = 0; i < inventory.num_elements; i++)
+	for (int i = 0; i < inventory->num_elements; i++)
 	{
-		if ((tokens.buffer[1] == inventory.buffer[i]->name) && (inventory.buffer[i]->pick == 1))
+		if ((tokens.buffer[1] == inventory->buffer[i]->name) && (inventory->buffer[i]->pick))
 		{
-			inventory.buffer[i]->pick = 0;
-			inventory.buffer[i]->location = curr_pos;
-			inventory.pop(i);
+			inventory->buffer[i]->pick = false;
+			inventory->pop(i);
 			printf("Now %s is NOT in your inventory.\n\n", tokens.buffer[1].string);
 			break;
 		}
-		if (i == inventory.num_elements - 1) printf("Can't find %s in your inventory.\n\n", tokens.buffer[1].string);
+		if (i == inventory->num_elements - 1) printf("Can't find %s in your inventory.\n\n", tokens.buffer[1].string);
 	}
 }
 
 void Player::Equip(const Vector <String>& tokens)
 {
-	for (int i = 0; i < inventory.num_elements; i++)
+	for (int i = 0; i < inventory->num_elements; i++)
 	{
-		if (tokens.buffer[1] == inventory.buffer[i]->name)
+		if (tokens.buffer[1] == inventory->buffer[i]->name)
 		{
-			if (inventory.buffer[i]->equip == 0 && equip_item == nullptr)
+			if (inventory->buffer[i]->equip == 0 && equip_item == nullptr)
 			{
-				inventory.buffer[i]->equip = 1;
-				equip_item = inventory.buffer[i];
+				inventory->buffer[i]->equip = 1;
+				equip_item = inventory->buffer[i];
 				printf("You equip %s.\n\n", tokens.buffer[1].string);
 			}
 			else if (equip_item != nullptr) printf("You only can equip 1 item.\n\n");
-			else if (inventory.buffer[i]->equip == -1) printf("You own this item but can't be equipped.\n\n");
-			else if (inventory.buffer[i]->equip == 1 && equip_item != nullptr) printf("This item is already equipped.\n\n");
-			else if (i == inventory.num_elements - 1) printf("This item is NOT in your inventory so you can't equip it.\n\n");
+			else if (inventory->buffer[i]->equip == -1) printf("You own this item but can't be equipped.\n\n");
+			else if (inventory->buffer[i]->equip == 1 && equip_item != nullptr) printf("This item is already equipped.\n\n");
+			else if (i == inventory->num_elements - 1) printf("This item is NOT in your inventory so you can't equip it.\n\n");
 			break;
 		}
-		else if (tokens.buffer[1] != inventory.buffer[i]->name && i == inventory.num_elements - 1) printf("Can't find this item.\n\n");
+		else if (tokens.buffer[1] != inventory->buffer[i]->name && i == inventory->num_elements - 1) printf("Can't find this item.\n\n");
 	}
-	if (inventory.num_elements == 0) printf("Your inventory is empty.\n\n");
+	if (inventory->num_elements == 0) printf("Your inventory is empty.\n\n");
 }
 
 void Player::Unequip(const Vector <String>& tokens)
 {
-	for (int i = 0; i < inventory.num_elements; i++)
+	for (int i = 0; i < inventory->num_elements; i++)
 	{
 		if ((tokens.buffer[1] == equip_item->name))
 		{
-			inventory.buffer[i]->equip = 0;
+			inventory->buffer[i]->equip = 0;
 			equip_item = nullptr;
 			printf("You unequip %s.\n\n", tokens.buffer[1].string);
 			break;
 		}
-		else if (i == inventory.num_elements - 1) printf("You aren't wearing this item so you can't unequip it.\n\n");
+		else if (i == inventory->num_elements - 1) printf("You aren't wearing this item so you can't unequip it.\n\n");
 	}
 }
 
@@ -179,17 +179,17 @@ void Player::Update(const Path* p)
 
 void Player::Inventory(const Vector <String>& tokens) const
 {
-	if (inventory.num_elements == 0) printf("The inventory is empty.\n\n");
+	if (inventory->num_elements == 0) printf("The inventory is empty.\n\n");
 	else
 	{
-		printf("You have: ");
-		for (int i = 0; i < inventory.num_elements; i++)
+		printf("In the intventory you have: ");
+		for (int i = 0; i < inventory->num_elements; i++)
 		{
-			if (tokens.buffer[0] == "look") printf("\n   -%s (%s)", inventory.buffer[i]->name.string, inventory.buffer[i]->description.string);
+			if (tokens.buffer[0] == "look") printf("\n   -%s (%s)", inventory->buffer[i]->name.string, inventory->buffer[i]->description.string);
 			else
 			{
-				printf("%s", inventory.buffer[i]->name.string);
-				if (i < inventory.num_elements - 1) printf(", ");
+				printf("%s", inventory->buffer[i]->name.string);
+				if (i < inventory->num_elements - 1) printf(", ");
 				else printf(".");
 			}
 		}
@@ -197,6 +197,139 @@ void Player::Inventory(const Vector <String>& tokens) const
 	}
 }
 
+void Player::Bag() const
+{
+	for (int i = 0; i < inventory->num_elements; i++)
+	{
+		if (inventory->buffer[i]->name == "bag")
+		{
+			printf("In the bag you have: ");
+			for (int j = 0; j < inventory->buffer[i]->inventory->num_elements; j++)
+			{
+				printf("%s", inventory->buffer[i]->name.string);
+				if (i < inventory->num_elements - 1) printf(", ");
+				else printf(".");
+			}
+			if (inventory->buffer[i]->inventory->num_elements == 0) printf("Bag empty.");
+			printf("\n\n");
+		}
+		else if (inventory->buffer[i]->name != "bag" && i == inventory->num_elements - 1) printf("Bag is not in your inventory.\n\n");
+	}
+	if (inventory->num_elements == 0) printf("Inventory empty.\n\n");
+}
+
+void Player::PutInto(const Vector <String>& tokens)
+{
+	int i = 0, j = 0;
+
+	for (i = 0; i < inventory->num_elements; i++)
+	{
+		if (tokens.buffer[3] == inventory->buffer[i]->name && inventory->buffer[i]->more_itm)
+		{
+			for (j = 0; j < inventory->num_elements; j++)
+			{
+				if (tokens.buffer[1] == inventory->buffer[j]->name && !inventory->buffer[j]->pick2)
+				{
+					inventory->buffer[i]->inventory->pushback(inventory->buffer[j]);
+					inventory->buffer[j]->pick2 = 1;
+					printf("You put %s into %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					break;
+				}
+				else if (tokens.buffer[1] == inventory->buffer[j]->name && inventory->buffer[j]->pick2)
+				{
+					printf("You put %s into %s before.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					break;
+				}
+				else if (tokens.buffer[1] != inventory->buffer[j]->name && j == inventory->num_elements - 1) 
+					printf("To put an object into other both have to be in your inventory (and exist).\n\n");
+			}
+		}
+		else if (tokens.buffer[3] == inventory->buffer[i]->name && !inventory->buffer[i]->more_itm)
+		{
+			printf("It's impossible to put %s into %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+			break;
+		}
+		else if (tokens.buffer[3] != inventory->buffer[i]->name && i == inventory->num_elements - 1 && j == 0)
+			printf("To put an object into other both have to be in your inventory (and exist).\n\n");
+	}
+	if (inventory->num_elements == 0) printf("Inventory empty.\n\n");
+}
+
+void Player::GetFrom(const Vector <String>& tokens)
+{
+	for (int i = 0; i < inventory->num_elements; i++)
+	{
+		if (tokens.buffer[3] == inventory->buffer[i]->name && inventory->buffer[i]->more_itm)
+		{
+			for (int j = 0; j < inventory->buffer[i]->inventory->num_elements; j++)
+			{
+				if (tokens.buffer[1] == inventory->buffer[i]->inventory->buffer[j]->name && inventory->buffer[i]->inventory->buffer[j]->pick2)
+				{
+					inventory->buffer[i]->inventory->buffer[j]->pick2 = 0;
+					inventory->buffer[i]->inventory->pop(j);
+					printf("You get %s from %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					break;
+				}
+				else if (tokens.buffer[1] == inventory->buffer[j]->name && inventory->buffer[j]->pick2)
+				{
+					printf("You get %s from %s before.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					break;
+				}
+				else if (inventory->buffer[i]->inventory->num_elements == 0)
+				{
+					printf("Nothing is inside %s.\n\n", tokens.buffer[3].string);
+					break;
+				}
+				else if (tokens.buffer[1] == inventory->buffer[i]->inventory->buffer[j]->name && j == inventory->buffer[i]->inventory->num_elements - 1)
+				{
+					printf("Can't find this item in %s.\n\n", tokens.buffer[3].string);
+					break;
+				}
+			}
+		}
+		else if (tokens.buffer[3] == inventory->buffer[i]->name && !inventory->buffer[i]->more_itm)
+		{
+			printf("It's impossible: %s can't storage items.\n\n", tokens.buffer[3].string);
+			break;
+		}
+		else if (tokens.buffer[3] != inventory->buffer[i]->name && i == inventory->num_elements - 1)
+		{
+			printf("Can't find %s in your inventory.\n\n", tokens.buffer[3].string);
+			break;
+		}
+	}
+}
+
+void Player::TurnOnGPS(const Vector<Entity*>& Entities)
+{
+	for (int i = 0; i < inventory->num_elements; i++)
+	{
+		if (inventory->buffer[i]->name == "gps")
+		{
+			printf("The GPS is going to show you the name and desc of the rooms connected with this:");
+			for (int j = 0; j < Entities.num_elements; j++)
+			{
+				Entity* aux = Entities[j];
+
+				if (aux->type == PATH)
+				{
+					Path* p = (Path*)aux;
+
+					if (p->source == curr_pos && p->direction == "north")
+						printf(" - To the north: %s. %s.\n", p->destination->name.string, p->destination->description.string);
+					if (p->source == curr_pos && p->direction == "south")
+						printf(" - To the south: %s. %s.\n", p->destination->name.string, p->destination->description.string);
+					if (p->source == curr_pos && p->direction == "east")
+						printf(" - To the east: %s. %s.\n", p->destination->name.string, p->destination->description.string);
+					if (p->source == curr_pos && p->direction == "west")
+						printf(" - To the west: %s. %s.\n", p->destination->name.string, p->destination->description.string);
+				}
+			}
+		}
+		else if (inventory->buffer[i]->name != "gps" && i == inventory->num_elements - 1) printf("You don't have a GPS in the inventory\n");
+	}
+	printf("\n");
+}
 
 
 		
