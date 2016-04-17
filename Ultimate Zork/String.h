@@ -20,6 +20,7 @@ public:
 	bool operator== (const char *other) const; 
 	bool operator== (const String& other) const;
 	bool operator!= (const char *other) const;
+	bool operator!= (const String& other) const;
 	const String& operator= (const char* str); 
 	void Tokenize(Vector<String>& tokens);
 	void GetWord(const int num);

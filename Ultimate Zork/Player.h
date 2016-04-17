@@ -14,7 +14,8 @@ public:
 	Room* curr_pos;
 
 	//Inventory ---
-	Vector<Item*> bag;
+	Vector<Item*> inventory;
+	Item* equip_item;
 
 public: 
 	Player(const char* name, const char* description, Room* curr_pos);
@@ -24,9 +25,11 @@ public:
 	void LookPath(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	void Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	void Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities);
+	void Equip(const Vector <String>& tokens);
+	void Unequip(const Vector <String>& tokens);
 	void Door(const enum Status& door, const Vector<Entity*>& Entities);
 	void Update(const Path* p);
-	void LookBag() const;
+	void Inventory(const Vector <String>& tokens) const;
 };
 
 #endif

@@ -21,16 +21,16 @@ World::World()
 	Entities.pushback(route_1b);
 
 	// Items
-	Item* item_1 = new Item("sword", "Random item 1", crashed_airplane);
-	Item* item_2 = new Item("shield", "Random item 2", crashed_airplane);
-	Item* item_3 = new Item("horse", "Random item 3", crashed_airplane);
+	Item* item_1 = new Item("sword", "Random item 1", crashed_airplane, -1);
+	Item* item_2 = new Item("shield", "Random item 2", crashed_airplane, 0);
+	Item* item_3 = new Item("horse", "Random item 3", crashed_airplane, -1);
 
 	Entities.pushback(item_1);
 	Entities.pushback(item_2);
 	Entities.pushback(item_3);
 
 	// Player
-	player = new Player("Marc", "The character is brave and strong", crashed_airplane);
+	player = new Player("Aventurer", "You are brave and strong", crashed_airplane);
 	Entities.pushback(player);
 }
 
@@ -43,7 +43,7 @@ void World::Ask()
 {
 	command.Tokenize(tokens);
 
-	if (tokens.buffer[0] == "move" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west"))
+	if (tokens.buffer[0] == "move" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "weast"))
 	{
 		player->Move(tokens, Entities);
 	}
@@ -75,14 +75,24 @@ void World::Ask()
 		player->Pick(tokens, Entities);
 	}
 
-	else if (tokens.buffer[0] == "drop")
+	else if (tokens.buffer[0] == "equip")
 	{
-		player->Drop(tokens, Entities);
+		player->Equip(tokens);
 	}
 
-	else if (tokens.buffer[0] == "look" && tokens.buffer[1] == "bag")
+	else if (tokens.buffer[0] == "unequip")
 	{
-		player->LookBag();
+		player->Unequip(tokens);
+	}
+
+	else if (tokens.buffer[0] == "pick")
+	{
+		player->Pick(tokens, Entities);
+	}
+
+	else if (tokens.buffer[0] == "inventory" || tokens.buffer[0] == "i" || (tokens.buffer[0] == "look" && (tokens.buffer[1] == "inventory") || (tokens.buffer[1] == "i")))
+	{
+		player->Inventory(tokens);
 	}
 
 	else if (tokens.buffer[0] == "help")

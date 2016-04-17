@@ -91,6 +91,12 @@ bool String::operator!= (const char *other) const
 	else return 0;
 }
 
+bool String::operator!= (const String& other) const
+{
+	if (strcmp(string, other.string)) return 1;
+	else return 0;
+}
+
 const String& String::operator= (const char *other)
 {
 	if (mem_size < strlen(other) + 1)
