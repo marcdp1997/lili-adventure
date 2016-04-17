@@ -18,6 +18,7 @@ public:
 	virtual ~World();
 	void Ask();
 	void Help() const;
+	void Tutorial() const;
 };
 
 #endif

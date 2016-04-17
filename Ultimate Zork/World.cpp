@@ -7,7 +7,7 @@
 World::World()
 {
 	// Rooms
-	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure.\n There is a sword in this room");
+	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure.\nThere is a sword in this room");
 	Room* lake = new Room("Lake", "Big lake with some fish.\nA river ends with a strong current in the west part");
 	Room* jungle1 = new Room("Jungle", "Trees and two small paths.\nBehind those trees there is a river going from south to west, but you can't go there");
 	Room* middle = new Room("Middle of Nowhere", "You are in a huge field.\nTo the east you can see a big mountain.\nThere is a bow in this room");
@@ -41,8 +41,8 @@ World::World()
 	entities.pushback(bottom);
 
 	// Paths
-	Path* route_1f = new Path("Route 1", "It seems to be water there", crashed_airplane, lake, "south", CLOSE);
-	Path* route_1b = new Path("Route 1", "Something is burning", lake, crashed_airplane, "north", CLOSE);
+	Path* route_1f = new Path("Route 1", "It seems to be water there", crashed_airplane, lake, "south", NO_DOOR);
+	Path* route_1b = new Path("Route 1", "Something is burning", lake, crashed_airplane, "north", NO_DOOR);
 	Path* route_2f = new Path("Route 2", "There is a long path sorrounded by lots of trees", crashed_airplane, jungle3, "east", NO_DOOR);
 	Path* route_2b = new Path("Route 2", "There is a long path sorrounded by lots of trees", jungle3, crashed_airplane, "west", NO_DOOR);
 	Path* route_3f = new Path("Route 3", "Trees, trees and more trees", lake, jungle1, "south", NO_DOOR);
@@ -160,6 +160,11 @@ void World::Ask()
 		player->Pick(tokens, entities);
 	}
 
+	else if (tokens.buffer[0] == "drop")
+	{
+		player->Drop(tokens, entities);
+	}
+
 	else if (tokens.buffer[0] == "equip")
 	{
 		player->Equip(tokens);
@@ -168,11 +173,6 @@ void World::Ask()
 	else if (tokens.buffer[0] == "unequip")
 	{
 		player->Unequip(tokens);
-	}
-
-	else if (tokens.buffer[0] == "pick")
-	{
-		player->Pick(tokens, entities);
 	}
 
 	else if (tokens.buffer[0] == "inventory" || tokens.buffer[0] == "i" || (tokens.buffer[0] == "look" && (tokens.buffer[1] == "inventory") || (tokens.buffer[1] == "i")))
@@ -223,4 +223,13 @@ void World::Help() const
 	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n\n");
 	printf("To close/open gates: open (or open gates), close (or close gates).\n\n");
 	printf("To see the commands: help.\nTo end game: quit.\n\n");
+}
+
+void World::Tutorial() const
+{
+	printf("Welcome survivor!\nYour plane had landed here a few days ago.\nYou were unconscious but now you have woken up.\nIt's time to explore this island and arrive to the peak.\n");
+	printf("Type 'help' if you want to see the commands or start your adventure!\n");
+	printf("Good luck!\n\n");
+
+	printf("%s. %s.\n\n", player->curr_pos->name.string, player->curr_pos->description.string);
 }

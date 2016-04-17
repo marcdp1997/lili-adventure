@@ -7,6 +7,8 @@ int main()
 {
 	World Island;
 
+	Island.Tutorial();
+
 	int i = 0;
 	do{
 		Island.Ask();
