@@ -128,19 +128,24 @@ void World::Ask()
 {
 	command.Tokenize(tokens);
 
-	if (tokens.buffer[0] == "move" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "weast"))
+	if (tokens.buffer[0] == "move" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west"))
 	{
-		player->Move(tokens, entities);
+		if (!player->Move(tokens, entities)) printf("You can't go there.\n\n");
 	}
 
-	else if (tokens.buffer[0] == "look" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west"))
+	else if (tokens.buffer[0] == "look" && (tokens.buffer[1] == "north" || tokens.buffer[1] == "south" || tokens.buffer[1] == "east" || tokens.buffer[1] == "west" || tokens.buffer[1] == "room"))
 	{
-		player->LookPath(tokens, entities);
+		if (!player->Look(tokens, entities)) printf("There isn't a path to look at.\n\n");
 	}
 
-	else if (tokens.buffer[0] == "look" && tokens.buffer[1] == "room")
+	else if (tokens.buffer[0] == "pick")
 	{
-		printf("%s. %s.\n\n", player->curr_pos->name.string, player->curr_pos->description.string);
+		if (!player->Pick(tokens, entities)) printf("Item not found.\n\n");
+	}
+
+	else if (tokens.buffer[0] == "drop")
+	{
+		if (!player->Drop(tokens, entities)) printf("This item is not in your inventory.\n\n");
 	}
 
 	else if ((tokens.buffer[0] == "open") || ((tokens.buffer[0] == "open") && (tokens.buffer[1] == "gates")))
@@ -155,24 +160,14 @@ void World::Ask()
 		player->Door(CLOSE, entities);
 	}
 
-	else if (tokens.buffer[0] == "pick")
-	{
-		player->Pick(tokens, entities);
-	}
-
-	else if (tokens.buffer[0] == "drop")
-	{
-		player->Drop(tokens, entities);
-	}
-
 	else if (tokens.buffer[0] == "equip")
 	{
-		player->Equip(tokens);
+		if (!player->Equip(tokens)) printf("Item not found in the inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "unequip")
 	{
-		player->Unequip(tokens);
+		if (!player->Unequip(tokens)) printf("You aren't wearing this item so you can't unequip it.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "inventory" || tokens.buffer[0] == "i" || (tokens.buffer[0] == "look" && (tokens.buffer[1] == "inventory") || (tokens.buffer[1] == "i")))
@@ -182,7 +177,12 @@ void World::Ask()
 
 	else if (tokens.buffer[0] == "bag" || tokens.buffer[0] == "b")
 	{
-		player->Bag();
+		if (!player->Bag()) printf("Bag is not in you invenotry.\n\n");
+	}
+
+	else if (tokens.buffer[0] == "turn" && tokens.buffer[1] == "on" && tokens.buffer[2] == "gps")
+	{
+		if (!player->TurnOnGPS(entities)) printf("GPS is not in your inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "put" && tokens.buffer[2] == "into")
@@ -195,15 +195,7 @@ void World::Ask()
 		player->GetFrom(tokens);
 	}
 
-	else if (tokens.buffer[0] == "turn" && tokens.buffer[1] == "on" && tokens.buffer[2] == "gps")
-	{
-		player->TurnOnGPS(entities);
-	}
-
-	else if (tokens.buffer[0] == "help")
-	{
-		Help();
-	}
+	else if (tokens.buffer[0] == "help") Help();
 
 	else if (tokens.buffer[0] == "quit") stop = 1;
 
@@ -228,7 +220,7 @@ void World::Help() const
 void World::Tutorial() const
 {
 	printf("Welcome survivor!\nYour plane had landed here a few days ago.\nYou were unconscious but now you have woken up.\nIt's time to explore this island and arrive to the peak.\n");
-	printf("Type 'help' if you want to see the commands or start your adventure!\n");
+	printf("Remember to type 'help' if you want to see the commands during your adventure!\n");
 	printf("Good luck!\n\n");
 
 	printf("%s. %s.\n\n", player->curr_pos->name.string, player->curr_pos->description.string);
