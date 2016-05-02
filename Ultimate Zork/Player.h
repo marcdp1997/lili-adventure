@@ -27,7 +27,7 @@ public:
 	void Door(const enum Status& door, const Vector<Entity*>& Entities);
 	void Inventory(const Vector <String>& tokens) const;
 	bool Bag() const;
-	void PutInto(const Vector <String>& tokens);
+	bool PutInto(const Vector <String>& tokens);
 	void GetFrom(const Vector <String>& tokens);
 	bool TurnOnGPS(const Vector<Entity*>& Entities) const;
 };

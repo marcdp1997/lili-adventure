@@ -252,45 +252,32 @@ bool Player::TurnOnGPS(const Vector<Entity*>& Entities) const
 	printf("\n"); return false;
 }
 
-
-
-
-void Player::PutInto(const Vector <String>& tokens)
+bool Player::PutInto(const Vector <String>& tokens)
 {
-	int i = 0, j = 0;
-
-	for (i = 0; i < inventory->num_elements; i++)
+	for (int i = 0; i < inventory->num_elements; i++)
 	{
 		if (tokens.buffer[3] == inventory->buffer[i]->name && inventory->buffer[i]->more_itm)
 		{
-			for (j = 0; j < inventory->num_elements; j++)
+			for (int j = 0; j < inventory->num_elements; j++)
 			{
-				if (tokens.buffer[1] == inventory->buffer[j]->name && !inventory->buffer[j]->pick2)
+				if (tokens.buffer[1] == inventory->buffer[j]->name)
 				{
-					inventory->buffer[i]->inventory->pushback(inventory->buffer[j]);
-					inventory->buffer[j]->pick2 = 1;
-					printf("You put %s into %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
-					break;
+					if ((!inventory->buffer[j]->pick2) && (inventory->buffer[j]->inventory->num_elements < MAX_ITEMS))
+					{
+						inventory->buffer[i]->inventory->pushback(inventory->buffer[j]);
+						inventory->buffer[j]->pick2 = 1;
+						printf("You put %s into %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					}
+					if ((inventory->buffer[j]->pick2) && (inventory->buffer[j]->inventory->num_elements < MAX_ITEMS)) printf("You put %s into %s before.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
+					if ((inventory->buffer[j]->pick2) && (inventory->buffer[j]->inventory->num_elements == MAX_ITEMS)) printf("Your %s is full.\n\n", tokens.buffer[3].string);
+					return true;
 				}
-				else if (tokens.buffer[1] == inventory->buffer[j]->name && inventory->buffer[j]->pick2)
-				{
-					printf("You put %s into %s before.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
-					break;
-				}
-				else if (tokens.buffer[1] != inventory->buffer[j]->name && j == inventory->num_elements - 1) 
-					printf("To put an object into other both have to be in your inventory (and exist).\n\n");
 			}
 		}
-		else if (tokens.buffer[3] == inventory->buffer[i]->name && !inventory->buffer[i]->more_itm)
-		{
-			printf("It's impossible to put %s into %s.\n\n", tokens.buffer[1].string, tokens.buffer[3].string);
-			break;
-		}
-		else if (tokens.buffer[3] != inventory->buffer[i]->name && i == inventory->num_elements - 1 && j == 0)
-			printf("To put an object into other both have to be in your inventory (and exist).\n\n");
 	}
-	if (inventory->num_elements == 0) printf("Inventory empty.\n\n");
+	return false;
 }
+
 
 void Player::GetFrom(const Vector <String>& tokens)
 {

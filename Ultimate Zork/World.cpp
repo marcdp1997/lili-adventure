@@ -187,7 +187,7 @@ void World::Ask()
 
 	else if (tokens.buffer[0] == "put" && tokens.buffer[2] == "into")
 	{
-		player->PutInto(tokens);
+		if (!player->PutInto(tokens)) printf("To put one item into other, one has to allow other items\n and both have to exist and be in the inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "get" && tokens.buffer[2] == "from")
