@@ -12,7 +12,7 @@ int main()
 	int i = 0;
 	do{
 		Island.Ask();
-	} while ((Island.player->curr_pos->name != "Peak") && (Island.stop == 0));
+	} while ((Island.player->curr_pos->name != "Makalu's Peak") && (Island.stop == 0));
 
 	printf("Thanks for playing!\n\n");
 

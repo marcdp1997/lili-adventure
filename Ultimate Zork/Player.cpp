@@ -27,7 +27,11 @@ bool Player::Move(const Vector <String>& tokens, const Vector<Entity*>& Entities
 			{
 				if (p->door == CLOSE) printf("The gates are closed. Open them to move forward.\n\n");
 				if (p->door == OPEN) printf("The gates are open. You can close them if you want.\n\n");
-				if ((p->door == NO_DOOR) || (p->door == OPEN)) Update(p, Entities);
+				if ((p->door == NO_DOOR) || (p->door == OPEN))
+				{
+					curr_pos = p->destination;
+					Update(Entities);
+				}
 				return true;
 			}
 		}
@@ -35,11 +39,11 @@ bool Player::Move(const Vector <String>& tokens, const Vector<Entity*>& Entities
 	return false;
 }
 
-bool Player::Look(const Vector <String>& tokens, const Vector<Entity*>& Entities) const
+bool Player::Look(const Vector <String>& tokens, const Vector<Entity*>& Entities)
 {
 	if (tokens.buffer[1] == "room")
 	{
-		printf("%s. %s.\n\n", curr_pos->name.string, curr_pos->description.string);
+		Update(Entities);
 		return true;
 	}
 
@@ -126,7 +130,11 @@ void Player::Door(const enum Status& door, const Vector<Entity*>& Entities)
 						p->door = door; 
 						p2->door = door;
 
-						if (door == OPEN) Update(p, Entities); // If the door now it's open, then we can update the position.
+						if (door == OPEN)
+						{
+							curr_pos = p->destination;
+							Update(Entities); // If the door now it's open, then we can update the position.
+						}
 					}
 				}
 			}
@@ -297,9 +305,8 @@ bool Player::GetFrom(const Vector <String>& tokens)
 	return false;
 }
 
-void Player::Update(const Path* p, const Vector<Entity*>& Entities)
+void Player::Update(const Vector<Entity*>& Entities)
 {
-	curr_pos = p->destination;
 	printf("%s. %s.", curr_pos->name.string, curr_pos->description.string);
 
 	for (int i = 0; i < Entities.num_elements; i++)
@@ -310,10 +317,9 @@ void Player::Update(const Path* p, const Vector<Entity*>& Entities)
 		{
 			Item* i = (Item*)aux;
 
-			if (i->location == curr_pos) printf("There is a %s in this room.", i->name.string);
+			if (i->location == curr_pos) printf("\nThere is a %s in this area.", i->name.string);
 		}
 	}
-
 	printf("\n\n");
 }
 

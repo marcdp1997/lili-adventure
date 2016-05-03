@@ -7,6 +7,7 @@
 
 class Room;
 class Item;
+class Path;
 
 class Player : public Entity
 {
@@ -19,7 +20,7 @@ public:
 	virtual ~Player();
 
 	bool Move(const Vector <String>& tokens, const Vector<Entity*>& Entities);
-	bool Look(const Vector <String>& tokens, const Vector<Entity*>& Entities) const;
+	bool Look(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	bool Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	bool Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	bool Equip(const Vector <String>& tokens);
@@ -30,7 +31,7 @@ public:
 	bool PutInto(const Vector <String>& tokens);
 	bool GetFrom(const Vector <String>& tokens);
 	bool TurnOnGPS(const Vector<Entity*>& Entities) const;
-	void Update(const Path* p, const Vector<Entity*>& Entities);
+	void Update(const Vector<Entity*>& Entities);
 };
 
 #endif
