@@ -1,7 +1,7 @@
 #include "Item.h"
 
-Item::Item(const char* name, const char* description, Room* location, int equip, int more_itm) : 
-Entity(name, description), equip(equip), location(location), more_itm(more_itm)
+Item::Item(const char* name, const char* description, Room* location, int equip, bool more_itm) : 
+Entity(name, description), equip(equip), location(location)
 {
 	type = ITEM;
 

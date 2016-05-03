@@ -28,8 +28,9 @@ public:
 	void Inventory(const Vector <String>& tokens) const;
 	bool Bag() const;
 	bool PutInto(const Vector <String>& tokens);
-	void GetFrom(const Vector <String>& tokens);
+	bool GetFrom(const Vector <String>& tokens);
 	bool TurnOnGPS(const Vector<Entity*>& Entities) const;
+	void Update(const Path* p, const Vector<Entity*>& Entities);
 };
 
 #endif

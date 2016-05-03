@@ -7,22 +7,22 @@
 World::World()
 {
 	// Rooms
-	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure.\nThere is a sword in this room");
+	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure.");
 	Room* lake = new Room("Lake", "Big lake with some fish.\nA river ends with a strong current in the west part");
 	Room* jungle1 = new Room("Jungle", "Trees and two small paths.\nBehind those trees there is a river going from south to west, but you can't go there");
-	Room* middle = new Room("Middle of Nowhere", "You are in a huge field.\nTo the east you can see a big mountain.\nThere is a bow in this room");
+	Room* middle = new Room("Middle of Nowhere", "You are in a huge field.\nTo the east you can see a big mountain.");
 	Room* mayan = new Room("Mayan Temple.", "There is a deteriorated Mayan temple but it is still looking good");
 	Room* jungle3 = new Room("Jungle", "Trees");
 	Room* jungle2 = new Room("Jungle", "Trees and two small paths.\nThere is a river to the south behind those trees, but you can't go there.\nYou can see a mountain from this area");
 	Room* peak = new Room("Makalu's Peak", "You arrived at the end of the map, congratulations!\nA helicopter picked you up to take you home");
 	Room* campsite = new Room("Campsite", "Here you can rest and get warmed");
 	Room* dunedin = new Room("Dunedin Gates", "This is the path that would guide you to the peak.\nThe river lets you here and you can't go back. The current is strong.\nA huge gates are in the north");
-	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls.\n There is a torch in this room");
+	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls.");
 	Room* cave = new Room("Cave", "You are in a cave located behind the waterfall. There are prehistoric paintings in the walls");
-	Room* chamber = new Room("Hidden chamber", "Small and cute chamber with nothing important.\nThere is a shield in this room");
-	Room* waterfalls = new Room("Waterfalls", "A majestic waterfalls are in the south of this area. They aren't so high to jump from.\nThere is a bag in this room");
+	Room* chamber = new Room("Hidden chamber", "Small and cute chamber with nothing important.");
+	Room* waterfalls = new Room("Waterfalls", "A majestic waterfalls are in the south of this area. They aren't so high to jump from.");
 	Room* bottom = new Room("Bottom of the waterfalls", "There are lots of corpses floating.\nThe water creates a river to the east part.\nIt could end up in an interesting place");
-	Room* jungle5 = new Room("Jungle", "Trees. There is a gps in this room");
+	Room* jungle5 = new Room("Jungle", "Trees.");
 
 	entities.pushback(crashed_airplane);
 	entities.pushback(lake);
@@ -103,11 +103,11 @@ World::World()
 
 	// Items
 	Item* sword = new Item("sword", "Heavy sword with monster's blood", crashed_airplane, 0, 0);
-	Item* gps = new Item("gps", "You can see the rooms you have near with this item", jungle5, -1, 0);
-	Item* torch = new Item("torch", "It's dark outside? Then use it!", lookout, -1, 0);
-	Item* shield = new Item("shield", "Heavy shield that protects from monter's hits", chamber, 0,0);
-	Item* bow = new Item("bow", "Perfect weapon to attack from long distances", middle, 0, 0);
-	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag!", waterfalls, -1, 1);
+	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0);
+	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0);
+	Item* shield = new Item("shield", "Heavy shield that protects from monter's hits", crashed_airplane, 0, 0);
+	Item* bow = new Item("bow", "Perfect weapon to attack from long distances", crashed_airplane, 0, 0);
+	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag!", crashed_airplane, -1, 1);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
@@ -187,12 +187,12 @@ void World::Ask()
 
 	else if (tokens.buffer[0] == "put" && tokens.buffer[2] == "into")
 	{
-		if (!player->PutInto(tokens)) printf("To put one item into other, one has to allow other items\n and both have to exist and be in the inventory.\n\n");
+		if (!player->PutInto(tokens)) printf("To put one item into other, one has to allow to put other items inside itself\nand both have to exist and be in the inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "get" && tokens.buffer[2] == "from")
 	{
-		player->GetFrom(tokens);
+		if (!player->GetFrom(tokens)) printf("To get one item from other, one has to allow to put other items inside itself\n and the other has to be inside. Also, both have to exist and be in the inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "help") Help();

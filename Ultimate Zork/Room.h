@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+class Item;
+
 class Room : public Entity
 {
 public:
