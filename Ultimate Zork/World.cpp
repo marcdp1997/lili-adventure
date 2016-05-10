@@ -149,14 +149,14 @@ void World::Ask()
 
 	else if ((tokens.buffer[0] == "open") || ((tokens.buffer[0] == "open") && (tokens.buffer[1] == "gates")))
 	{
-		printf("You have opened the gates.\n");
-		player->Door(OPEN, entities);
+		if (player->CheckDoor(entities)) player->Door(OPEN, entities);
+		else printf("There isn't a door in this area.\n\n");
 	}
 
 	else if ((tokens.buffer[0] == "close") || ((tokens.buffer[0] == "close") && (tokens.buffer[1] == "gates")))
 	{
-		printf("You have closed the gates.\n");
-		player->Door(CLOSE, entities);
+		if (player->CheckDoor(entities)) player->Door(CLOSE, entities);
+		else printf("There isn't a door in this area.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "equip")
@@ -176,7 +176,7 @@ void World::Ask()
 
 	else if (tokens.buffer[0] == "bag" || tokens.buffer[0] == "b")
 	{
-		if (!player->Bag()) printf("Bag is not in you invenotry.\n\n");
+		if (!player->Bag()) printf("Bag is not in your inventory.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "turn" && tokens.buffer[1] == "on" && tokens.buffer[2] == "gps")
@@ -211,7 +211,6 @@ void World::Help() const
 	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n\n");
 	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n\n");
 	printf("To turn on GPS: turn on gps.\n\n");
-	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n\n");
 	printf("To close/open gates: open (or open gates), close (or close gates).\n\n");
 	printf("To see the commands: help.\nTo end game: quit.\n\n");
 }

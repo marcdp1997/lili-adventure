@@ -25,6 +25,7 @@ public:
 	bool Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities);
 	bool Equip(const Vector <String>& tokens);
 	bool Unequip(const Vector <String>& tokens);
+	bool CheckDoor(const Vector<Entity*>& Entities) const;
 	void Door(const enum Status& door, const Vector<Entity*>& Entities);
 	void Inventory(const Vector <String>& tokens) const;
 	bool Bag() const;

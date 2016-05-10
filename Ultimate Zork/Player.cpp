@@ -26,7 +26,7 @@ bool Player::Move(const Vector <String>& tokens, const Vector<Entity*>& Entities
 			if ((curr_pos == p->source) && (tokens.buffer[1] == p->direction))
 			{
 				if (p->door == CLOSE) printf("The gates are closed. Open them to move forward.\n\n");
-				if (p->door == OPEN) printf("The gates are open. You can close them if you want.\n\n");
+				if (p->door == OPEN) printf("The gates are open. You can close them if you want.\n");
 				if ((p->door == NO_DOOR) || (p->door == OPEN))
 				{
 					curr_pos = p->destination;
@@ -78,7 +78,7 @@ bool Player::Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities
 			if ((i->name == tokens.buffer[1]) && (i->location == curr_pos))
 			{
 				if (i->pick) printf("You added this item before.\n\n");
-				if (!i->pick && inventory->num_elements == INV_CAPACITY) printf("You inventory is full.\n\n");
+				if (!i->pick && inventory->num_elements == INV_CAPACITY) printf("Your inventory is full.\n\n");
 				if (!i->pick && inventory->num_elements < INV_CAPACITY)
 				{
 					inventory->pushback(i);
@@ -99,6 +99,8 @@ bool Player::Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities
 		if ((tokens.buffer[1] == inventory->buffer[i]->name) && (inventory->buffer[i]->pick))
 		{
 			inventory->buffer[i]->pick = false;
+			inventory->buffer[i]->pick2 = false;
+			equip_item = nullptr;
 			inventory->buffer[i]->location = curr_pos;
 			inventory->pop(i);
 			printf("Now %s is NOT in your inventory.\n\n", tokens.buffer[1].string);
@@ -132,9 +134,11 @@ void Player::Door(const enum Status& door, const Vector<Entity*>& Entities)
 
 						if (door == OPEN)
 						{
+							printf("You have opened the gates.\n");
 							curr_pos = p->destination;
 							Update(Entities); // If the door now it's open, then we can update the position.
 						}
+						else printf("You have closed the gates.\n\n");
 					}
 				}
 			}
@@ -148,6 +152,7 @@ bool Player::Equip(const Vector <String>& tokens)
 	{
 		if (tokens.buffer[1] == inventory->buffer[i]->name)
 		{
+			if ((inventory->buffer[i]->equip == 1) && (equip_item != nullptr)) printf("This item is already equipped.\n\n");
 			if (inventory->buffer[i]->equip == 0 && equip_item == nullptr)
 			{
 				inventory->buffer[i]->equip = 1;
@@ -155,7 +160,6 @@ bool Player::Equip(const Vector <String>& tokens)
 				printf("You equip %s.\n\n", tokens.buffer[1].string);
 			}
 			if ((inventory->buffer[i]->equip == 0) && (equip_item != nullptr)) printf("You only can equip 1 item.\n\n");
-			if ((inventory->buffer[i]->equip == 1) && (equip_item != nullptr)) printf("This item is already equipped.\n\n");
 			if (inventory->buffer[i]->equip == -1) printf("This item can't be equipped.\n\n");
 			return true;
 		}
@@ -169,7 +173,7 @@ bool Player::Unequip(const Vector <String>& tokens)
 	{
 		if ((tokens.buffer[1] == equip_item->name))
 		{
-			inventory->buffer[i]->equip = 0;
+			inventory->buffer[i]->equip = false;
 			equip_item = nullptr;
 			printf("You unequip %s.\n\n", tokens.buffer[1].string);
 			return true;
@@ -322,6 +326,24 @@ void Player::Update(const Vector<Entity*>& Entities)
 	}
 	printf("\n\n");
 }
+
+bool Player::CheckDoor(const Vector<Entity*>& Entities) const
+{
+	for (int i = 0; i < Entities.num_elements; i++)
+	{
+		Entity* aux = Entities[i];
+
+		if (aux->type == PATH)
+		{
+			Path* p = (Path*)aux;
+
+			if (p->source == curr_pos && p->door != NO_DOOR)
+				return true;
+		}
+	}
+	return false;
+}
+
 
 
 
