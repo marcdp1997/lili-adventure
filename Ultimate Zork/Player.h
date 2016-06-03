@@ -3,26 +3,21 @@
 
 #define INV_CAPACITY 5
 
-#include "Entity.h"
+#include "Creature.h"
 
 class Room;
 class Item;
-class Path;
 
-class Player : public Entity
+class Player : public Creature
 {
 public:
-	Room* curr_pos;
-	uint coins;
-	uint hp;
-
-	// Items equipped 
+	// Items that can be equipped 
 	Item* armor = nullptr; 
 	Item* shield = nullptr; 
 	Item* weapon = nullptr; 
 
 public: 
-	Player(const char* name, const char* description, Room* curr_pos);
+	Player(const char* name, const char* description, Room* creature_pos);
 	virtual ~Player();
 
 	bool Move(const Vector <String>& tokens, const Vector<Entity*>& Entities);

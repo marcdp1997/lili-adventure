@@ -1,5 +1,5 @@
-#ifndef BASE_H
-#define BASE_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <stdio.h>
 #include "String.h"
@@ -7,7 +7,7 @@
 
 class Item;
 
-enum Entity_type { PLAYER, ROOM, PATH, ITEM, ENTITY };
+enum Entity_type { PLAYER, NPC, ROOM, PATH, ITEM, ENTITY };
 
 class Entity
 {
@@ -19,7 +19,7 @@ public:
 	Vector<Item*>* inventory;
 
 public:
-	Entity::Entity(const char* name, const char* description);
+	Entity(const char* name, const char* description);
 	virtual ~Entity();
 };
 

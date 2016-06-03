@@ -16,6 +16,9 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{745fcd29-7fc3-4426-8e33-b5bcc87f24ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Creatures">
+      <UniqueIdentifier>{36348f72-9ab6-4f46-b7f0-ce17a7f015c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
@@ -26,9 +29,6 @@
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Entities</Filter>
@@ -42,6 +42,15 @@
     <ClInclude Include="Entity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>Creatures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World.cpp">
@@ -50,13 +59,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="String.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="Path.cpp">
@@ -67,6 +70,18 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Creatures</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>Creatures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

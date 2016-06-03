@@ -3,7 +3,7 @@
 #include "Item.h"
 #include "Room.h"
 
-Player::Player(const char* name, const char* description, Room* room) : Entity(name, description), curr_pos(room)
+Player::Player(const char* name, const char* description, Room* creature_pos) : Creature(name, description, creature_pos, 10, 0)
 {
 	type = PLAYER;
 	inventory = new Vector<Item*>(INV_CAPACITY); // Add to the destructor?
