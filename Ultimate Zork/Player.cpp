@@ -6,7 +6,6 @@
 Player::Player(const char* name, const char* description, Room* room) : Entity(name, description), curr_pos(room)
 {
 	type = PLAYER;
-	equip_item = nullptr;
 	inventory = new Vector<Item*>(INV_CAPACITY); // Add to the destructor?
 }
 
@@ -100,7 +99,6 @@ bool Player::Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities
 		{
 			inventory->buffer[i]->pick = false;
 			inventory->buffer[i]->pick2 = false;
-			equip_item = nullptr;
 			inventory->buffer[i]->location = curr_pos;
 			inventory->pop(i);
 			printf("Now %s is NOT in your inventory.\n\n", tokens.buffer[1].string);
@@ -136,7 +134,7 @@ void Player::Door(const enum Status& door, const Vector<Entity*>& Entities)
 						{
 							printf("You have opened the gates.\n");
 							curr_pos = p->destination;
-							Update(Entities); // If the door now it's open, then we can update the position.
+							Update(Entities); // If the door it's open, then we can update the position.
 						}
 						else printf("You have closed the gates.\n\n");
 					}
@@ -152,15 +150,38 @@ bool Player::Equip(const Vector <String>& tokens)
 	{
 		if (tokens.buffer[1] == inventory->buffer[i]->name)
 		{
-			if ((inventory->buffer[i]->equip == 1) && (equip_item != nullptr)) printf("This item is already equipped.\n\n");
-			if (inventory->buffer[i]->equip == 0 && equip_item == nullptr)
+			if (inventory->buffer[i]->subtype == 0)
 			{
-				inventory->buffer[i]->equip = 1;
-				equip_item = inventory->buffer[i];
-				printf("You equip %s.\n\n", tokens.buffer[1].string);
+				if (shield != nullptr && tokens.buffer[1] == shield->name) printf("This item is already equipped.\n\n");
+				if (shield != nullptr && tokens.buffer[1] != shield->name) printf("You only can equip 1 type of shield.\n\n");
+				if (shield == nullptr)
+				{
+					shield = inventory->buffer[i];
+					printf("You equip %s in the shield slot.\n\n", tokens.buffer[1].string);
+				}
 			}
-			if ((inventory->buffer[i]->equip == 0) && (equip_item != nullptr)) printf("You only can equip 1 item.\n\n");
-			if (inventory->buffer[i]->equip == -1) printf("This item can't be equipped.\n\n");
+			else if (inventory->buffer[i]->subtype == 1)
+			{
+				if (weapon != nullptr && tokens.buffer[1] == weapon->name) printf("This item is already equipped.\n\n");
+				if (weapon != nullptr && tokens.buffer[1] != weapon->name) printf("You only can equip 1 type of weapon.\n\n");
+				if (weapon == nullptr)
+				{
+					weapon = inventory->buffer[i];
+					printf("You equip %s in the weapon slot.\n\n", tokens.buffer[1].string);
+				}
+			}
+			else if (inventory->buffer[i]->subtype == 2)
+			{
+				if (armor != nullptr && tokens.buffer[1] == armor->name) printf("This item is already equipped.\n\n");
+				if (armor != nullptr && tokens.buffer[1] != armor->name) printf("You only can equip 1 type of armor.\n\n");
+				if (armor == nullptr)
+				{
+					armor = inventory->buffer[i];
+					printf("You equip %s in the armor slot.\n\n", tokens.buffer[1].string);
+				}
+			}
+			else printf("This item can't be equipped.\n\n");
+
 			return true;
 		}
 	}
@@ -169,16 +190,25 @@ bool Player::Equip(const Vector <String>& tokens)
 
 bool Player::Unequip(const Vector <String>& tokens)
 {
-	for (int i = 0; i < inventory->num_elements; i++)
+	if (shield != nullptr && tokens.buffer[1] == shield->name)
 	{
-		if ((tokens.buffer[1] == equip_item->name))
-		{
-			inventory->buffer[i]->equip = false;
-			equip_item = nullptr;
-			printf("You unequip %s.\n\n", tokens.buffer[1].string);
-			return true;
-		}
+		shield = nullptr;
+		printf("You unequip %s.\n\n", tokens.buffer[1].string);
+		return true;
 	}
+	if (weapon != nullptr && tokens.buffer[1] == weapon->name)
+	{
+		weapon = nullptr;
+		printf("You unequip %s.\n\n", tokens.buffer[1].string);
+		return true;
+	}
+	if (armor != nullptr && tokens.buffer[1] == armor->name)
+	{
+		armor = nullptr;
+		printf("You unequip %s.\n\n", tokens.buffer[1].string);
+		return true;
+	}
+
 	return false;
 }
 

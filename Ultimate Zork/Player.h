@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define INV_CAPACITY 4
+#define INV_CAPACITY 5
 
 #include "Entity.h"
 
@@ -13,7 +13,13 @@ class Player : public Entity
 {
 public:
 	Room* curr_pos;
-	Item* equip_item = nullptr; // Item equipped
+	uint coins;
+	uint hp;
+
+	// Items equipped 
+	Item* armor = nullptr; 
+	Item* shield = nullptr; 
+	Item* weapon = nullptr; 
 
 public: 
 	Player(const char* name, const char* description, Room* curr_pos);

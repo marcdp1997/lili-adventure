@@ -100,13 +100,14 @@ World::World()
 	entities.pushback(route_16f);
 	entities.pushback(route_16b);
 
-	// Items
-	Item* sword = new Item("sword", "Heavy sword with monster's blood", crashed_airplane, 0, 0);
-	Item* gps = new Item("gps", "You can see the rooms you have near with this item", jungle1, -1, 0);
-	Item* torch = new Item("torch", "It's dark outside? Then use it!", lookout, -1, 0);
-	Item* shield = new Item("shield", "Heavy shield that protects from monter's hits", chamber, 0, 0);
-	Item* bow = new Item("bow", "Perfect weapon to attack from long distances", middle, 0, 0);
-	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag!", waterfalls, -1, 1);
+	// Items (if I want to add more items, see equip & unequip)
+	Item* sword = new Item("sword", "Heavy sword with monster's blood", crashed_airplane, 1, 0);
+	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0);
+	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0);
+	Item* shield = new Item("shield", "Heavy shield that protects from monter's hits", crashed_airplane, 0, 0);
+	Item* bow = new Item("bow", "Perfect weapon to attack from long distances", crashed_airplane, 1, 0);
+	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1);
+	Item* camo = new Item("camouflage", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
@@ -114,6 +115,7 @@ World::World()
 	entities.pushback(shield);
 	entities.pushback(bow);
 	entities.pushback(bag);
+	entities.pushback(camo);
 
 	// Player
 	player = new Player("Aventurer", "You are brave and strong", crashed_airplane);

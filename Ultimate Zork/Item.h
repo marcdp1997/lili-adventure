@@ -12,10 +12,10 @@ public:
 	Room* location;
 	bool pick = false;    // To know if it's inside the inventory of the player
 	bool pick2 = false;   // To know if it's inside the "inventory" of an item
-	int equip;        // -1 == can't be equipped, 0 == not equiped, 1 == equiped
+	int subtype;             // -1 == can't be equipped, 0 == shield, 1 == weapon, 2 == armor
 
 public:
-	Item::Item(const char* name, const char* description, Room* location, int equip, bool more_itm);
+	Item::Item(const char* name, const char* description, Room* location, int subtype, bool more_itm);
 	virtual ~Item();
 };
 
