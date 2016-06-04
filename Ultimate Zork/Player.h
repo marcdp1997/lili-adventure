@@ -12,7 +12,7 @@ class Player : public Creature
 {
 public:
 	// Items that can be equipped 
-	Item* armor = nullptr; 
+	Item* clothes = nullptr; 
 	Item* shield = nullptr; 
 	Item* weapon = nullptr; 
 

@@ -20,7 +20,7 @@ Npc::~Npc()
 // We will enter this method as goblin so we need the player stats to do the combat.
 void Npc::Update(Vector<Entity*>& Entities, Player* p, uint i)
 {
-	if (p->curr_pos == curr_pos) st_step = COMBAT;
+	if (p->curr_pos == curr_pos && st_step == WALK) st_step = COMBAT;
 
 	switch (st_step)
 	{
@@ -29,7 +29,6 @@ void Npc::Update(Vector<Entity*>& Entities, Player* p, uint i)
 		break;
 	case COMBAT:
 		Combat(Entities, p, i);
-		break;
 	}
 }
 
@@ -74,7 +73,7 @@ void Npc::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 void Npc::Player_Attack(Player* p)
 {
 	uint delay = 0;
-	while (delay != 700000000)
+	while (delay != 800000000)
 		delay++;
 
 	if (hp > p->damage) hp -= p->damage;
@@ -92,7 +91,7 @@ void Npc::Player_Attack(Player* p)
 void Npc::Goblin_Attack(Player* p)
 {
 	uint delay = 0;
-	while (delay != 700000000)
+	while (delay != 800000000)
 		delay++;
 
 	if (p->hp > damage) p->hp -= damage;

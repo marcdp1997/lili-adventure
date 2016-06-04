@@ -172,12 +172,12 @@ bool Player::Equip(const Vector <String>& tokens)
 			}
 			else if (inventory->buffer[i]->subtype == 2)
 			{
-				if (armor != nullptr && tokens.buffer[1] == armor->name) printf("This item is already equipped.\n\n");
-				if (armor != nullptr && tokens.buffer[1] != armor->name) printf("You only can equip 1 type of armor.\n\n");
-				if (armor == nullptr)
+				if (clothes != nullptr && tokens.buffer[1] == clothes->name) printf("This item is already equipped.\n\n");
+				if (clothes != nullptr && tokens.buffer[1] != clothes->name) printf("You only can equip 1 type of clothes.\n\n");
+				if (clothes == nullptr)
 				{
-					armor = inventory->buffer[i];
-					printf("You equip %s in the armor slot.\n\n", tokens.buffer[1].string);
+					clothes = inventory->buffer[i];
+					printf("You equip %s in the clothes slot.\n\n", tokens.buffer[1].string);
 				}
 			}
 			else printf("This item can't be equipped.\n\n");
@@ -202,9 +202,9 @@ bool Player::Unequip(const Vector <String>& tokens)
 		printf("You unequip %s.\n\n", tokens.buffer[1].string);
 		return true;
 	}
-	if (armor != nullptr && tokens.buffer[1] == armor->name)
+	if (clothes != nullptr && tokens.buffer[1] == clothes->name)
 	{
-		armor = nullptr;
+		clothes = nullptr;
 		printf("You unequip %s.\n\n", tokens.buffer[1].string);
 		return true;
 	}

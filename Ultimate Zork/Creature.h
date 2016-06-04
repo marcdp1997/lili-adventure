@@ -19,6 +19,8 @@ public:
 public:
 	Creature(const char* name, const char* description, Room* c_pos, uint c_hp, uint c_coins, uint c_damage);
 	virtual ~Creature();
+
+	virtual void Update(Vector<Entity*>& Entities, Player* p, uint i) {}
 };
 
 #endif

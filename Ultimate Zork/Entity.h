@@ -23,7 +23,7 @@ public:
 	Entity(const char* name, const char* description);
 	virtual ~Entity();
 
-	virtual void Update(const Vector<Entity*>& Entities, Player* p, uint i) {};
+	virtual void Update(Vector<Entity*>& Entities, Player* p, uint i) {}
 };
 
 #endif
