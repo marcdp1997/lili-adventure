@@ -7,7 +7,6 @@ Player::Player(const char* name, const char* description, Room* creature_pos) : 
 {
 	type = PLAYER;
 	inventory = new Vector<Item*>(INV_CAPACITY); // Add to the destructor?
-	st_step = WALK;
 }
 
 Player::~Player()

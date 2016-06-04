@@ -213,18 +213,7 @@ void World::Ask()
 void World::Call_Update()
 {
 	for (int i = 0; i < entities.num_elements; i++)
-	{
-		Entity* aux = entities[i];
-
-		if (aux->type == NPC)
-		{
-			Npc* n = (Npc*)aux;
-
-			if (player->curr_pos == n->curr_pos) n->st_step = COMBAT;
-			n->Update(entities, player);
-			if (n->hp == 0) entities.pop(i);
-		}
-	}
+		entities.buffer[i]->Update(entities, player, i);
 }
 
 void World::Help() const

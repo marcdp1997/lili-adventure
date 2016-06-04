@@ -6,6 +6,7 @@
 #include "Vector.h"
 
 class Item;
+class Player;
 
 enum Entity_type { PLAYER, NPC, ROOM, PATH, ITEM, ENTITY };
 
@@ -22,7 +23,7 @@ public:
 	Entity(const char* name, const char* description);
 	virtual ~Entity();
 
-	virtual void Update() {};
+	virtual void Update(const Vector<Entity*>& Entities, Player* p, uint i) {};
 };
 
 #endif
