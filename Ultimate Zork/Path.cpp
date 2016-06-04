@@ -5,7 +5,7 @@ Entity(name, description),
 source(source), destination(destination), door(door), direction(direction)
 {
 	type = PATH;
-	inventory = NULL;
+	inventory = nullptr;
 }
 
 Path::~Path()

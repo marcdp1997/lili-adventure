@@ -125,6 +125,8 @@ World::World()
 	// Creatures
 	Npc* goblin1 = new Npc("Goblin 1", "Wild creature that lives in the jungle", waterfalls);
 	entities.pushback(goblin1);
+	Npc* goblin2 = new Npc("Goblin 2", "Wild creature that lives in the jungle", jungle1);
+	entities.pushback(goblin2);
 }
 
 World::~World()
@@ -206,10 +208,9 @@ void World::Ask()
 	else if (tokens.buffer[0] == "quit") stop = 1;
 
 	else printf("Command not recogized.\n\n");
-
 }
 
-void World::Call_Update() const
+void World::Call_Update()
 {
 	for (int i = 0; i < entities.num_elements; i++)
 	{
@@ -218,7 +219,10 @@ void World::Call_Update() const
 		if (aux->type == NPC)
 		{
 			Npc* n = (Npc*)aux;
-			n->Update(entities);
+
+			if (player->curr_pos == n->curr_pos) n->st_step = COMBAT;
+			n->Update(entities, player);
+			if (n->hp == 0) entities.pop(i);
 		}
 	}
 }

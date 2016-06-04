@@ -3,11 +3,11 @@
 #include "Item.h"
 #include "Room.h"
 
-Player::Player(const char* name, const char* description, Room* creature_pos) : Creature(name, description, creature_pos, 10, 0)
+Player::Player(const char* name, const char* description, Room* creature_pos) : Creature(name, description, creature_pos, 10, 0, 1)
 {
 	type = PLAYER;
 	inventory = new Vector<Item*>(INV_CAPACITY); // Add to the destructor?
-	st_step = IDLE;
+	st_step = WALK;
 }
 
 Player::~Player()
