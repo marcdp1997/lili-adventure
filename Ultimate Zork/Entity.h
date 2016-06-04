@@ -21,6 +21,8 @@ public:
 public:
 	Entity(const char* name, const char* description);
 	virtual ~Entity();
+
+	virtual void Update() {};
 };
 
 #endif

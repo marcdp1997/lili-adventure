@@ -9,7 +9,7 @@ Entity(name, description), location(location), subtype(subtype)
 	{
 		inventory = new Vector<Item*>(MAX_ITEMS);
 	}
-	else inventory = NULL;
+	else inventory = nullptr;
 }
 
 Item::~Item()

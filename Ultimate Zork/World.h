@@ -19,6 +19,7 @@ public:
 	void Ask();
 	void Help() const;
 	void Tutorial() const;
+	void Call_Update() const;
 };
 
 #endif

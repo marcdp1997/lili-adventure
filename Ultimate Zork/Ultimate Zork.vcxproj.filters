@@ -48,7 +48,7 @@
     <ClInclude Include="Player.h">
       <Filter>Creatures</Filter>
     </ClInclude>
-    <ClInclude Include="npc.h">
+    <ClInclude Include="Npc.h">
       <Filter>Creatures</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="npc.cpp">
+    <ClCompile Include="Npc.cpp">
       <Filter>Creatures</Filter>
     </ClCompile>
   </ItemGroup>

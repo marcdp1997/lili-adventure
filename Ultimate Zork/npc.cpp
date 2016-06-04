@@ -2,13 +2,14 @@
 #include "Path.h"
 #include "Item.h"
 #include "Room.h"
-#include "npc.h"
+#include "Npc.h"
 
-npc::npc(const char* name, const char* description, Room* creature_pos) : Creature(name, description, NPC, creature_pos, 2, 20)
+Npc::Npc(const char* name, const char* description, Room* c_pos) : Creature(name, description, c_pos, 2, 20)
 {
 	type = NPC;
 	inventory = nullptr;
+	st_step = IDLE;
 }
 
-npc::~npc()
+Npc::~Npc()
 {}

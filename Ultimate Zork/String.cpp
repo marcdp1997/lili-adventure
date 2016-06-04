@@ -31,7 +31,6 @@ unsigned int String::Length() const
 
 void String::Tokenize(Vector<String>& tokens)
 {
-	printf("> ");
 	fgets(string, mem_size, stdin);
 
 	int num_words = 1;

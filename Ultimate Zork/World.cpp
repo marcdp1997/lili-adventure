@@ -3,6 +3,7 @@
 #include "Path.h"
 #include "Room.h"
 #include "Player.h"
+#include "Npc.h"
 
 World::World()
 {
@@ -120,6 +121,10 @@ World::World()
 	// Player
 	player = new Player("Aventurer", "You are brave and strong", crashed_airplane);
 	entities.pushback(player);
+
+	// Creatures
+	Npc* goblin1 = new Npc("Goblin 1", "Wild creature that lives in the jungle", waterfalls);
+	entities.pushback(goblin1);
 }
 
 World::~World()
@@ -202,6 +207,20 @@ void World::Ask()
 
 	else printf("Command not recogized.\n\n");
 
+}
+
+void World::Call_Update() const
+{
+	for (int i = 0; i < entities.num_elements; i++)
+	{
+		Entity* aux = entities[i];
+
+		if (aux->type == NPC)
+		{
+			Npc* n = (Npc*)aux;
+			n->Update(entities);
+		}
+	}
 }
 
 void World::Help() const
