@@ -226,19 +226,24 @@ void World::Ask()
 		if (!player->GetFrom(tokens)) printf("To get one item from other, one has to allow to put other items inside itself\n and the other has to be inside. Also, both have to exist and be in the inventory.\n\n");
 	}
 
-	else if (tokens.buffer[0] == "buy" && tokens.buffer[1] == "merch")
+	else if (tokens.buffer[0] == "buy" && tokens.buffer[1] == "merchant")
 	{
 		if(player->curr_pos == merch->curr_pos) merch->LookItems();
-		else printf("There isn't a merch in this area.\n\n");
+		else printf("There isn't a merchant in this area.\n\n");
 	}
 
-	else if ((tokens.buffer[0] == "buy" || tokens.buffer[0] == "sell") && tokens.buffer[3] == "merch")
+	else if ((tokens.buffer[0] == "buy" || tokens.buffer[0] == "sell") && tokens.buffer[3] == "merchant")
 	{
 		if (player->curr_pos == merch->curr_pos)
 		{
 			if (!merch->BuySell(tokens, player)) printf("To buy or sell an item it has to be in your inventory or in the shop.\n\n");
 		}
-		else printf("There isn't a merch in this area.\n\n");
+		else printf("There isn't a merchant in this area.\n\n");
+	}
+
+	else if (tokens.buffer[0] == "coins" || tokens.buffer[0] == "c")
+	{
+		printf("Coins: %i.\n\n", player->coins);
 	}
 
 	else if (tokens.buffer[0] == "help") Help();
@@ -264,6 +269,9 @@ void World::Help() const
 	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n\n");
 	printf("To turn on GPS: turn on gps.\n\n");
 	printf("To close/open gates: open (or open gates), close (or close gates).\n\n");
+	printf("To buy/sell items: buy / sell (name of the item) from merchant.\n");
+	printf("To see your coins: coins / c.\n");
+	printf("To see the items available to buy: buy (name of the item).\n\n");
 	printf("To see the commands: help.\nTo end game: quit.\n\n");
 }
 
