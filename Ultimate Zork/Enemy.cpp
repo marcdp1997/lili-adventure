@@ -65,7 +65,9 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 	if (p->hp == 0) printf("You are dead!\nGAME OVER\n\n");
 	if (hp == 0)
 	{
-		printf("You have defeated %s. +%i coins!\n\n", name.string, coins);
+		if (p->clothes != nullptr && p->clothes->name != "amulet") printf("You have defeated %s. +%i coins!\n\n", name.string, coins);
+		else printf("You have defeated %s. +%i coins!\n\n", name.string, coins * 2);
+
 		Entities.pop(i);
 	}
 }
@@ -80,7 +82,8 @@ void Enemy::Player_Attack(Player* p)
 	else
 	{
 		hp = 0;
-		p->coins += coins;
+		if (p->clothes != nullptr && p->clothes->name != "amulet") p->coins += coins;
+		else p->coins += (coins * 2);
 	}
 
 	if (p->weapon != nullptr) printf("You attack %s for %i with your %s! %s has %i left.\n", name.string, p->damage, p->weapon->name.string, name.string, hp);

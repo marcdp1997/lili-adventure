@@ -54,14 +54,25 @@ bool Merchant::BuySell(const Vector <String>& tokens, Player* p)
 		{
 			if (tokens.buffer[1] == p->inventory->buffer[i]->name)
 			{
+				if (p->clothes != nullptr && p->clothes->name != "amulet")
+				{
 					p->coins += p->inventory->buffer[i]->coins;
-					p->inventory->buffer[i]->pick = false;
-					p->inventory->buffer[i]->pick2 = false;
-					inventory->pushback(p->inventory->buffer[i]);
 					printf("You sold %s to the merch for %i coins.\n\n", p->inventory->buffer[i]->name.string, p->inventory->buffer[i]->coins);
-					p->inventory->buffer[i]->coins *= 2;
-					p->inventory->pop(i);
-					return true;
+				}
+				else
+				{
+					p->coins += (p->inventory->buffer[i]->coins * 2);
+					printf("You sold %s to the merch for %i coins.\n\n", p->inventory->buffer[i]->name.string, p->inventory->buffer[i]->coins * 2);
+				}
+
+				if (p->clothes != nullptr && p->clothes->name == tokens.buffer[1]) p->clothes = nullptr;
+				if (p->weapon != nullptr && p->weapon->name == tokens.buffer[1]) p->weapon = nullptr;
+				if (p->shield != nullptr && p->shield->name == tokens.buffer[1]) p->shield = nullptr;
+
+				inventory->pushback(p->inventory->buffer[i]);
+				p->inventory->buffer[i]->coins *= 2;
+				p->inventory->pop(i);
+				return true;
 			}
 		}
 	}

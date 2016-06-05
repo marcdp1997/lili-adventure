@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #define INV_CAPACITY 5
+#define MAX_HP 10
 
 #include "Creature.h"
 
@@ -34,6 +35,7 @@ public:
 	bool GetFrom(const Vector <String>& tokens);
 	bool TurnOnGPS(const Vector<Entity*>& Entities) const;
 	void Update(const Vector<Entity*>& Entities);
+	bool Drink();
 };
 
 #endif

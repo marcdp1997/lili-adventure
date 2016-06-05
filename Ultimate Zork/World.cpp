@@ -103,22 +103,24 @@ World::World()
 	entities.pushback(route_16b);
 
 	// Map items
-	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 30", crashed_airplane, 1, 0, 10);
+	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 3", crashed_airplane, 1, 0, 10);
 	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0, 12);
-	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0, 7);
+	Item* gold = new Item("gold", "Sell it to earn lots of coins", crashed_airplane, -1, 0, 100);
 	Item* wshield = new Item("wshield", "Wood shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
 	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1, 10);
 	Item* camo = new Item("camo", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1, 20);
+	Item* amulet = new Item("amulet", "You earn more coins per enemy killed and item sold", crashed_airplane, 2, 0, 50);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
-	entities.pushback(torch);
+	entities.pushback(gold);
 	entities.pushback(wshield);
 	entities.pushback(bag);
 	entities.pushback(camo);
+	entities.pushback(amulet);
 
 	// Shop items
-	Item* bow = new Item("bow", "Perfect for long distances. Hits two times before being attacked. Damage = 20", nullptr, 1, 0, 35);
+	Item* bow = new Item("bow", "Perfect for long distances. Hits two times before being attacked. Damage = 2", nullptr, 1, 0, 35);
 	Item* mshield = new Item("mshield", "Metal shield that reduces 2/3 monter's damage", nullptr, 0, 0, 22);
 	Item* hood = new Item("hood", "Invisible hood that makes you inmune to enemy attaks", nullptr, 2, 0, 100);
 	Item* potion = new Item("potion", "Your max HP increases  by 5", nullptr, -1, 0, 10);
@@ -246,6 +248,16 @@ void World::Ask()
 		printf("Coins: %i.\n\n", player->coins);
 	}
 
+	else if (tokens.buffer[0] == "hp")
+	{
+		printf("HP: %i.\n\n", player->hp);
+	}
+
+	else if (tokens.buffer[0] == "drink" && tokens.buffer[1] == "potion")
+	{
+		if (!player->Drink()) printf("Potion is not in your inventory.\n\n");
+	}
+
 	else if (tokens.buffer[0] == "help") Help();
 
 	else if (tokens.buffer[0] == "quit") stop = 1;
@@ -261,17 +273,17 @@ void World::Call_Update()
 
 void World::Help() const
 {
-	printf("To move: move (north, south, east, west).\nTo look: look (north, south, east, west, room).\n\n");
-	printf("To pick items: pick (name of the item).\nTo drop items: drop (name of the item).\n\n");
-	printf("To see the inventory: inventory / i (to see name of the items) or \nlook inventory / look i (to see name and description).\n\n");
-	printf("To see the bag: bag / b (to see name of the items).\n\n");
-	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n\n");
-	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n\n");
-	printf("To turn on GPS: turn on gps.\n\n");
-	printf("To close/open gates: open (or open gates), close (or close gates).\n\n");
+	printf("To move: move (north, south, east, west).\nTo look: look (north, south, east, west, room).\n");
+	printf("To pick items: pick (name of the item).\nTo drop items: drop (name of the item).\n");
+	printf("To see the inventory: inventory / i (only name of the items) or\nlook inventory / look i (name and description).\n");
+	printf("To see the bag: bag / b (to see name of the items).\n");
+	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n");
+	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n");
+	printf("To turn on GPS: turn on gps.\n");
+	printf("To close/open gates: open (or open gates), close (or close gates).\n");
 	printf("To buy/sell items: buy / sell (name of the item) from merchant.\n");
-	printf("To see your coins: coins / c.\n");
-	printf("To see the items available to buy: buy (name of the item).\n\n");
+	printf("To see the items available to buy: buy (name of the item).\n");
+	printf("To see your coins: coins / c.\nTo see your hp: hp.\n");
 	printf("To see the commands: help.\nTo end game: quit.\n\n");
 }
 

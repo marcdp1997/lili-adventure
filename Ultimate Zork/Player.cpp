@@ -3,7 +3,7 @@
 #include "Item.h"
 #include "Room.h"
 
-Player::Player(const char* name, const char* description, Room* creature_pos) : Creature(name, description, creature_pos, 10, 0, 1)
+Player::Player(const char* name, const char* description, Room* creature_pos) : Creature(name, description, creature_pos, MAX_HP, 0, 1)
 {
 	type = PLAYER;
 	inventory = new Vector<Item*>(INV_CAPACITY); // Add to the destructor?
@@ -98,6 +98,10 @@ bool Player::Drop(const Vector <String>& tokens, const Vector<Entity*>& Entities
 	{
 		if ((tokens.buffer[1] == inventory->buffer[i]->name) && (inventory->buffer[i]->pick))
 		{
+			if (clothes != nullptr && clothes->name == tokens.buffer[1]) clothes = nullptr;
+			if (weapon != nullptr && weapon->name == tokens.buffer[1]) weapon = nullptr;
+			if (shield != nullptr && shield->name == tokens.buffer[1]) shield = nullptr;
+
 			inventory->buffer[i]->pick = false;
 			inventory->buffer[i]->pick2 = false;
 			inventory->buffer[i]->location = curr_pos;
@@ -169,6 +173,8 @@ bool Player::Equip(const Vector <String>& tokens)
 				{
 					weapon = inventory->buffer[i];
 					printf("You equip %s in the weapon slot.\n\n", tokens.buffer[1].string);
+					if (weapon->name == "bow") damage = 4;
+					if (weapon->name == "sword") damage = 3;
 				}
 			}
 			else if (inventory->buffer[i]->subtype == 2)
@@ -199,6 +205,7 @@ bool Player::Unequip(const Vector <String>& tokens)
 	}
 	if (weapon != nullptr && tokens.buffer[1] == weapon->name)
 	{
+		damage = 20;
 		weapon = nullptr;
 		printf("You unequip %s.\n\n", tokens.buffer[1].string);
 		return true;
@@ -370,6 +377,21 @@ bool Player::CheckDoor(const Vector<Entity*>& Entities) const
 
 			if (p->source == curr_pos && p->door != NO_DOOR)
 				return true;
+		}
+	}
+	return false;
+}
+
+bool Player::Drink()
+{
+	for (int i = 0; i < inventory->num_elements; i++)
+	{
+		if (inventory->buffer[i]->name == "potion")
+		{
+			hp = MAX_HP + 5;
+			printf("Your HP is now 15.\n\n");
+			inventory->pop(i);
+			return true;
 		}
 	}
 	return false;
