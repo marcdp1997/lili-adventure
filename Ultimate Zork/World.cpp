@@ -108,7 +108,6 @@ World::World()
 	Item* gold = new Item("gold", "Sell it to earn lots of coins", crashed_airplane, -1, 0, 100);
 	Item* wshield = new Item("wshield", "Wood shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
 	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1, 10);
-	Item* camo = new Item("camo", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1, 20);
 	Item* amulet = new Item("amulet", "You earn more coins per enemy killed and item sold", crashed_airplane, 2, 0, 50);
 
 	entities.pushback(sword);
@@ -116,7 +115,6 @@ World::World()
 	entities.pushback(gold);
 	entities.pushback(wshield);
 	entities.pushback(bag);
-	entities.pushback(camo);
 	entities.pushback(amulet);
 
 	// Shop items

@@ -100,5 +100,6 @@ void Enemy::Goblin_Attack(Player* p)
 	if (p->hp > damage) p->hp -= damage;
 	else p->hp = 0;
 
-	printf("%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
+	if (p->clothes != nullptr && p->clothes->name == "hood") printf("You are invisible with this hood. %s miss.\n", name.string);
+	else printf("%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
 }
