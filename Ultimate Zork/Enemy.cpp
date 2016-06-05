@@ -6,7 +6,6 @@
 
 #include <stdlib.h>
 #include <time.h>  
-#include <ctime>
 
 Enemy::Enemy(const char* name, const char* description, Room* c_pos) : Creature(name, description, c_pos, 5, 20, 3)
 {
@@ -59,12 +58,12 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 
 	while (p->hp > 0 && hp > 0)
 	{
-		Player_Attack(p);
-		Goblin_Attack(p);
+		if (p->hp > 0) Player_Attack(p);
+		if (hp > 0) Goblin_Attack(p);
 	}
 
-	if (p->hp == 0) printf("You are dead!\nGAME OVER\n\n");
-	if (hp == 0)
+	if (p->hp == 0 && hp > 0) printf("You are dead!\nGAME OVER\n\n");
+	if (hp == 0 && p->hp > 0)
 	{
 		if (p->clothes != nullptr && p->clothes->name == "amulet") printf("You have defeated %s. +%i coins!\n\n", name.string, coins * 2);
 		else printf("You have defeated %s. +%i coins!\n\n", name.string, coins);
@@ -77,14 +76,14 @@ void Enemy::Player_Attack(Player* p)
 {
 	clock_t start_time = clock();
 	clock_t end_time = 1 * 1000 + start_time; // 1st num == seconds of delay
-	while (clock() != end_time);
+	while (clock() < end_time){}
 
 	if (hp > p->damage) hp -= p->damage;
 	else
 	{
 		hp = 0;
-		if (p->clothes != nullptr && p->clothes->name != "amulet") p->coins += coins;
-		else p->coins += (coins * 2);
+		if (p->clothes != nullptr && p->clothes->name == "amulet") p->coins += (coins * 2);
+		else p->coins += coins;
 	}
 
 	if (p->weapon != nullptr) printf("You attack %s for %i with your %s! %s has %i left.\n", name.string, p->damage, p->weapon->name.string, name.string, hp);
@@ -96,12 +95,12 @@ void Enemy::Goblin_Attack(Player* p)
 {
 	clock_t start_time = clock();
 	clock_t end_time = 1 * 1000 + start_time;
-	while (clock() != end_time);
+	while (clock() < end_time){}
 
 	// Set damage depending on the item equipped
 	if (p->clothes != nullptr && p->clothes->name == "hood") damage = 0;
-	else if (p->shield != nullptr && p->clothes->name == "wshield") damage = 2;
-	else if (p->shield != nullptr && p->clothes->name == "mshield") damage = 1;
+	else if (p->shield != nullptr && p->shield->name == "wshield") damage = 2;
+	else if (p->shield != nullptr && p->shield->name == "mshield") damage = 1;
 
 	// Attack
 	if (p->hp > damage) p->hp -= damage;
@@ -109,7 +108,7 @@ void Enemy::Goblin_Attack(Player* p)
 
 	// Different printfs
 	if (p->clothes != nullptr && p->clothes->name == "hood") printf("You are invisible with this hood. %s miss.\n", name.string);
-	else if (p->shield != nullptr && p->clothes->name == "wshield") printf("The wood shield will reduce the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
-	else if (p->shield != nullptr && p->clothes->name == "mshield") printf("The metal shield will reduce a lot the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
+	else if (p->shield != nullptr && p->shield->name == "wshield") printf("The wood shield will reduce the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
+	else if (p->shield != nullptr && p->shield->name == "mshield") printf("The metal shield will reduce a lot the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
 	else printf("%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
 }
