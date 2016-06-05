@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <time.h>  
 
-Enemy::Enemy(const char* name, const char* description, Room* c_pos) : Creature(name, description, c_pos, 4, 20, 2)
+Enemy::Enemy(const char* name, const char* description, Room* c_pos) : Creature(name, description, c_pos, 5, 20, 3)
 {
 	type = ENEMY;
 	inventory = nullptr;
@@ -97,9 +97,18 @@ void Enemy::Goblin_Attack(Player* p)
 	while (delay != 800000000)
 		delay++;
 
+	// Set damage depending on the item equipped
+	if (p->clothes != nullptr && p->clothes->name == "hood") damage = 0;
+	else if (p->shield != nullptr && p->clothes->name == "wshield") damage = 2;
+	else if (p->shield != nullptr && p->clothes->name == "mshield") damage = 1;
+
+	// Attack
 	if (p->hp > damage) p->hp -= damage;
 	else p->hp = 0;
 
+	// Different printfs
 	if (p->clothes != nullptr && p->clothes->name == "hood") printf("You are invisible with this hood. %s miss.\n", name.string);
+	else if (p->shield != nullptr && p->clothes->name == "wshield") printf("The wood shield will reduce the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
+	else if (p->shield != nullptr && p->clothes->name == "mshield") printf("The metal shield will reduce a lot the damage received.\n%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
 	else printf("%s attack you for %i! You have %i HP left.\n", name.string, damage, p->hp);
 }
