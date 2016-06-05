@@ -67,7 +67,8 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="Npc.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
@@ -80,7 +81,8 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />

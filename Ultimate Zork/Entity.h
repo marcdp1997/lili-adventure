@@ -8,7 +8,7 @@
 class Item;
 class Player;
 
-enum Entity_type { PLAYER, NPC, ROOM, PATH, ITEM, ENTITY };
+enum Entity_type { PLAYER, ENEMY, MERCH, ROOM, PATH, ITEM, ENTITY };
 
 class Entity
 {

@@ -48,7 +48,10 @@
     <ClInclude Include="Player.h">
       <Filter>Creatures</Filter>
     </ClInclude>
-    <ClInclude Include="Npc.h">
+    <ClInclude Include="Enemy.h">
+      <Filter>Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Merchant.h">
       <Filter>Creatures</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,7 +83,10 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Npc.cpp">
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Creatures</Filter>
+    </ClCompile>
+    <ClCompile Include="Merchant.cpp">
       <Filter>Creatures</Filter>
     </ClCompile>
   </ItemGroup>

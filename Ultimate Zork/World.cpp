@@ -3,7 +3,8 @@
 #include "Path.h"
 #include "Room.h"
 #include "Player.h"
-#include "Npc.h"
+#include "Enemy.h"
+#include "Merchant.h"
 
 World::World()
 {
@@ -101,32 +102,49 @@ World::World()
 	entities.pushback(route_16f);
 	entities.pushback(route_16b);
 
-	// Items (if I want to add more items, see equip & unequip)
-	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 30", crashed_airplane, 1, 0);
-	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0);
-	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0);
-	Item* shield = new Item("shield", "Heavy shield that protects from monter's hits", crashed_airplane, 0, 0);
-	Item* bow = new Item("bow", "Perfect weapon to attack from long distances. Damage = 20", crashed_airplane, 1, 0);
-	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1);
-	Item* camo = new Item("camouflage", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1);
+	// Map items
+	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 30", crashed_airplane, 1, 0, 10);
+	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0, 12);
+	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0, 7);
+	Item* wood_shield = new Item("wood shield", "Shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
+	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1, 10);
+	Item* camo = new Item("camouflage", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1, 20);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
 	entities.pushback(torch);
-	entities.pushback(shield);
-	entities.pushback(bow);
+	entities.pushback(wood_shield);
 	entities.pushback(bag);
 	entities.pushback(camo);
+
+	// Shop items
+	Item* bow = new Item("bow", "Perfect weapon to attack from long distances.\nYou can hit two times before being attacked. Damage = 20", nullptr, 1, 0, 35);
+	Item* metal_shield = new Item("metal shield", "Heavy shield that reduces 2/3 monter's damage", nullptr, 0, 0, 22);
+	Item* hood = new Item("hood", "Invisible hood that makes you inmune to enemy attaks", nullptr, 2, 0, 100);
+	Item* potion = new Item("potion", "Your max HP increases  by 5", nullptr, -1, 0, 10);
+
+	entities.pushback(bow);
+	entities.pushback(metal_shield);
+	entities.pushback(hood);
+	entities.pushback(potion);
 
 	// Player
 	player = new Player("Aventurer", "You are brave and strong", crashed_airplane);
 	entities.pushback(player);
 
 	// Creatures
-	Npc* goblin1 = new Npc("Goblin 1", "Wild creature that lives in the jungle", waterfalls);
+	Enemy* goblin1 = new Enemy("Goblin 1", "Wild creature that lives in the jungle", waterfalls);
 	entities.pushback(goblin1);
-	Npc* goblin2 = new Npc("Goblin 2", "Wild creature that lives in the jungle", jungle1);
+	Enemy* goblin2 = new Enemy("Goblin 2", "Wild creature that lives in the jungle", jungle1);
 	entities.pushback(goblin2);
+
+	// Merchant
+	merch = new Merchant("Merchant", "A creature with lots of items to buy", lookout);
+	entities.pushback(merch);
+	merch->inventory->pushback(bow);
+	merch->inventory->pushback(metal_shield);
+	merch->inventory->pushback(hood);
+	merch->inventory->pushback(potion);
 }
 
 World::~World()
@@ -201,6 +219,17 @@ void World::Ask()
 	else if (tokens.buffer[0] == "get" && tokens.buffer[2] == "from")
 	{
 		if (!player->GetFrom(tokens)) printf("To get one item from other, one has to allow to put other items inside itself\n and the other has to be inside. Also, both have to exist and be in the inventory.\n\n");
+	}
+
+	else if (tokens.buffer[0] == "get" && tokens.buffer[2] == "from")
+	{
+		if (!player->GetFrom(tokens)) printf("To get one item from other, one has to allow to put other items inside itself\n and the other has to be inside. Also, both have to exist and be in the inventory.\n\n");
+	}
+
+	else if (tokens.buffer[0] == "buy" && tokens.buffer[1] == "merch")
+	{
+		if(player->curr_pos == merch->curr_pos) merch->Buy();
+		else printf("There isn't a merch in this area.\n\n");
 	}
 
 	else if (tokens.buffer[0] == "help") Help();

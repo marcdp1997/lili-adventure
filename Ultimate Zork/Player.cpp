@@ -80,6 +80,7 @@ bool Player::Pick(const Vector <String>& tokens, const Vector<Entity*>& Entities
 				if (!i->pick && inventory->num_elements == INV_CAPACITY) printf("Your inventory is full.\n\n");
 				if (!i->pick && inventory->num_elements < INV_CAPACITY)
 				{
+					i->location = nullptr;
 					inventory->pushback(i);
 					printf("You add %s in your inventory.\n\n", tokens.buffer[1].string);
 					i->pick = true;
@@ -351,7 +352,7 @@ void Player::Update(const Vector<Entity*>& Entities)
 		{
 			Item* i = (Item*)aux;
 
-			if (i->location == curr_pos) printf("\nThere is a %s in this area.", i->name.string);
+			if (i->location != nullptr && i->location == curr_pos) printf("\nThere is a %s in this area.", i->name.string);
 		}
 	}
 	printf("\n\n");

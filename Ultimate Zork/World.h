@@ -2,7 +2,9 @@
 #define WORLD_H
 
 #include "Entity.h"
+
 class Player;
+class Merchant;
 
 class World
 {
@@ -12,6 +14,7 @@ public:
 	Vector<String> tokens;
 	Vector<Entity*> entities;
 	Player* player;
+	Merchant* merch;
 
 public:
 	World();

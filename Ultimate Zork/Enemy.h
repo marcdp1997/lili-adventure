@@ -1,17 +1,16 @@
-#ifndef NPC_H
-#define NPC_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include "Creature.h"
 
-
-class Npc : public Creature
+class Enemy : public Creature
 {
 public:
 	state st_step;
 
 public:
-	Npc(const char* name, const char* description, Room* creature_pos);
-	virtual ~Npc();
+	Enemy(const char* name, const char* description, Room* creature_pos);
+	virtual ~Enemy();
 
 	void Update(Vector<Entity*>& Entities, Player* p, uint i);
 
