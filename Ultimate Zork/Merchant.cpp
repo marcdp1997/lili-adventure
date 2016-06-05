@@ -54,7 +54,7 @@ bool Merchant::BuySell(const Vector <String>& tokens, Player* p)
 		{
 			if (tokens.buffer[1] == p->inventory->buffer[i]->name)
 			{
-				if (p->clothes != nullptr && p->clothes->name != "amulet")
+				if (p->clothes->name != "amulet")
 				{
 					p->coins += p->inventory->buffer[i]->coins;
 					printf("You sold %s to the merch for %i coins.\n\n", p->inventory->buffer[i]->name.string, p->inventory->buffer[i]->coins);

@@ -16,7 +16,6 @@ public:
 	String name;
 	String description;
 	Entity_type type;
-
 	Vector<Item*>* inventory;
 
 public:

@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <time.h>  
+#include <ctime>
 
 Enemy::Enemy(const char* name, const char* description, Room* c_pos) : Creature(name, description, c_pos, 5, 20, 3)
 {
@@ -54,7 +55,7 @@ void Enemy::Move(const Vector<Entity*>& Entities)
 
 void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 {
-	printf("\n%s has appeared in the same area than you.\nYou must fight with him to move!\n", name.string);
+	printf("%s has appeared in the same area than you.\nYou must fight with him to move!\n", name.string);
 
 	while (p->hp > 0 && hp > 0)
 	{
@@ -65,8 +66,8 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 	if (p->hp == 0) printf("You are dead!\nGAME OVER\n\n");
 	if (hp == 0)
 	{
-		if (p->clothes != nullptr && p->clothes->name != "amulet") printf("You have defeated %s. +%i coins!\n\n", name.string, coins);
-		else printf("You have defeated %s. +%i coins!\n\n", name.string, coins * 2);
+		if (p->clothes != nullptr && p->clothes->name == "amulet") printf("You have defeated %s. +%i coins!\n\n", name.string, coins * 2);
+		else printf("You have defeated %s. +%i coins!\n\n", name.string, coins);
 
 		Entities.pop(i);
 	}
@@ -74,9 +75,9 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 
 void Enemy::Player_Attack(Player* p)
 {
-	uint delay = 0;
-	while (delay != 800000000)
-		delay++;
+	clock_t start_time = clock();
+	clock_t end_time = 1 * 1000 + start_time; // 1st num == seconds of delay
+	while (clock() != end_time);
 
 	if (hp > p->damage) hp -= p->damage;
 	else
@@ -93,9 +94,9 @@ void Enemy::Player_Attack(Player* p)
 
 void Enemy::Goblin_Attack(Player* p)
 {
-	uint delay = 0;
-	while (delay != 800000000)
-		delay++;
+	clock_t start_time = clock();
+	clock_t end_time = 1 * 1000 + start_time;
+	while (clock() != end_time);
 
 	// Set damage depending on the item equipped
 	if (p->clothes != nullptr && p->clothes->name == "hood") damage = 0;

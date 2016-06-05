@@ -104,11 +104,11 @@ World::World()
 
 	// Map items
 	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 3", crashed_airplane, 1, 0, 10);
-	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0, 12);
-	Item* gold = new Item("gold", "Sell it to earn lots of coins", crashed_airplane, -1, 0, 100);
-	Item* wshield = new Item("wshield", "Wood shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
-	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1, 10);
-	Item* amulet = new Item("amulet", "You earn more coins per enemy killed and item sold", crashed_airplane, 2, 0, 50);
+	Item* gps = new Item("gps", "You can see the rooms you have near with this item", jungle1, -1, 0, 12);
+	Item* gold = new Item("gold", "Sell it to earn lots of coins", mayan, -1, 0, 100);
+	Item* wshield = new Item("wshield", "Wood shield that reduces 1/3 monter's damage", chamber, 0, 0, 15);
+	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", waterfalls, -1, 1, 10);
+	Item* amulet = new Item("amulet", "You earn more coins per enemy killed and item sold", jungle3, 2, 0, 50);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
@@ -118,7 +118,7 @@ World::World()
 	entities.pushback(amulet);
 
 	// Shop items
-	Item* bow = new Item("bow", "Perfect for long distances. Hits two times before being attacked. Damage = 2", nullptr, 1, 0, 35);
+	Item* bow = new Item("bow", "Hits two times before being attacked. Damage = 2", nullptr, 1, 0, 35);
 	Item* mshield = new Item("mshield", "Metal shield that reduces 2/3 monter's damage", nullptr, 0, 0, 22);
 	Item* hood = new Item("hood", "Invisible hood that makes you inmune to enemy attaks", nullptr, 2, 0, 100);
 	Item* potion = new Item("potion", "Your max HP increases  by 5", nullptr, -1, 0, 10);
@@ -133,10 +133,15 @@ World::World()
 	entities.pushback(player);
 
 	// Creatures
-	Enemy* goblin1 = new Enemy("Goblin 1", "Wild creature that lives in the jungle", waterfalls);
-	entities.pushback(goblin1);
+	Enemy* goblin1 = new Enemy("Goblin 1", "Wild creature that lives in the jungle", bottom);
 	Enemy* goblin2 = new Enemy("Goblin 2", "Wild creature that lives in the jungle", jungle1);
+	Enemy* goblin3 = new Enemy("Goblin 3", "Wild creature that lives in the jungle", dunedin);
+	Enemy* goblin4 = new Enemy("Goblin 4", "Wild creature that lives in the jungle", middle);
+	
+	entities.pushback(goblin1);
 	entities.pushback(goblin2);
+	entities.pushback(goblin3);
+	entities.pushback(goblin4);
 
 	// Merchant
 	merch = new Merchant("Merchant", "A creature with lots of items to buy", lookout);
@@ -278,6 +283,7 @@ void World::Help() const
 	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n");
 	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n");
 	printf("To turn on GPS: turn on gps.\n");
+	printf("To drink potion: drink potion.\n");
 	printf("To close/open gates: open (or open gates), close (or close gates).\n");
 	printf("To buy/sell items: buy / sell (name of the item) from merchant.\n");
 	printf("To see the items available to buy: buy (name of the item).\n");
