@@ -11,7 +11,8 @@ public:
 	Merchant(const char* name, const char* description, Room* creature_pos);
 	virtual ~Merchant();
 
-	void Buy();
+	void LookItems();
+	bool BuySell(const Vector <String>& tokens, Player* p);
 };
 
 #endif

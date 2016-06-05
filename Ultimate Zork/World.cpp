@@ -19,7 +19,7 @@ World::World()
 	Room* peak = new Room("Makalu's Peak", "You arrived at the end of the map, congratulations!\nA helicopter picked you up to take you home");
 	Room* campsite = new Room("Campsite", "Here you can rest and get warmed");
 	Room* dunedin = new Room("Dunedin Gates", "This is the path that would guide you to the peak.\nThe river lets you here and you can't go back. The current is strong.\nA huge gates are in the north");
-	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls");
+	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls.\nThere is a merch in this area to buy or sell items");
 	Room* cave = new Room("Cave", "You are in a cave located behind the waterfall.\nThere are prehistoric paintings in the walls");
 	Room* chamber = new Room("Hidden chamber", "Small and cute chamber with nothing important");
 	Room* waterfalls = new Room("Waterfalls", "A majestic waterfalls are in the south of this area. They aren't so high to jump from");
@@ -106,25 +106,25 @@ World::World()
 	Item* sword = new Item("sword", "Heavy sword with monster's blood. Damage = 30", crashed_airplane, 1, 0, 10);
 	Item* gps = new Item("gps", "You can see the rooms you have near with this item", crashed_airplane, -1, 0, 12);
 	Item* torch = new Item("torch", "It's dark outside? Then use it!", crashed_airplane, -1, 0, 7);
-	Item* wood_shield = new Item("wood shield", "Shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
+	Item* wshield = new Item("wshield", "Wood shield that reduces 1/3 monter's damage", crashed_airplane, 0, 0, 15);
 	Item* bag = new Item("bag", "Improve your inventory capacity carrying more objects inside the bag", crashed_airplane, -1, 1, 10);
-	Item* camo = new Item("camouflage", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1, 20);
+	Item* camo = new Item("camo", "You have more possibilities to evade enemy attacks", crashed_airplane, 2, 1, 20);
 
 	entities.pushback(sword);
 	entities.pushback(gps);
 	entities.pushback(torch);
-	entities.pushback(wood_shield);
+	entities.pushback(wshield);
 	entities.pushback(bag);
 	entities.pushback(camo);
 
 	// Shop items
-	Item* bow = new Item("bow", "Perfect weapon to attack from long distances.\nYou can hit two times before being attacked. Damage = 20", nullptr, 1, 0, 35);
-	Item* metal_shield = new Item("metal shield", "Heavy shield that reduces 2/3 monter's damage", nullptr, 0, 0, 22);
+	Item* bow = new Item("bow", "Perfect for long distances. Hits two times before being attacked. Damage = 20", nullptr, 1, 0, 35);
+	Item* mshield = new Item("mshield", "Metal shield that reduces 2/3 monter's damage", nullptr, 0, 0, 22);
 	Item* hood = new Item("hood", "Invisible hood that makes you inmune to enemy attaks", nullptr, 2, 0, 100);
 	Item* potion = new Item("potion", "Your max HP increases  by 5", nullptr, -1, 0, 10);
 
 	entities.pushback(bow);
-	entities.pushback(metal_shield);
+	entities.pushback(mshield);
 	entities.pushback(hood);
 	entities.pushback(potion);
 
@@ -142,7 +142,7 @@ World::World()
 	merch = new Merchant("Merchant", "A creature with lots of items to buy", lookout);
 	entities.pushback(merch);
 	merch->inventory->pushback(bow);
-	merch->inventory->pushback(metal_shield);
+	merch->inventory->pushback(mshield);
 	merch->inventory->pushback(hood);
 	merch->inventory->pushback(potion);
 }
@@ -228,7 +228,16 @@ void World::Ask()
 
 	else if (tokens.buffer[0] == "buy" && tokens.buffer[1] == "merch")
 	{
-		if(player->curr_pos == merch->curr_pos) merch->Buy();
+		if(player->curr_pos == merch->curr_pos) merch->LookItems();
+		else printf("There isn't a merch in this area.\n\n");
+	}
+
+	else if ((tokens.buffer[0] == "buy" || tokens.buffer[0] == "sell") && tokens.buffer[3] == "merch")
+	{
+		if (player->curr_pos == merch->curr_pos)
+		{
+			if (!merch->BuySell(tokens, player)) printf("To buy or sell an item it has to be in your inventory or in the shop.\n\n");
+		}
 		else printf("There isn't a merch in this area.\n\n");
 	}
 
