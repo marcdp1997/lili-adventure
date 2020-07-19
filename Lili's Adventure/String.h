@@ -24,7 +24,6 @@ public:
 	bool operator!= (const String& other) const;
 	const String& operator= (const char* str); 
 	void Tokenize(Vector<String>& tokens);
-	void SlowPrint(unsigned int milis_per_char);
 };
 
 #endif

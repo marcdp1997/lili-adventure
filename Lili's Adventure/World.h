@@ -22,8 +22,9 @@ public:
 	virtual ~World();
 	void Ask();
 	void Help() const;
-	void Tutorial() const;
-	void Call_Update();
+	void Tutorial();
+	void CallUpdate();
+	void SlowPrint(const char* message, uint milis_per_char = 35);
 };
 
 #endif

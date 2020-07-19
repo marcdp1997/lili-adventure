@@ -268,7 +268,7 @@ void World::Ask()
 	else printf("Command not recogized.\n\n");
 }
 
-void World::Call_Update()
+void World::CallUpdate()
 {
 	for (int i = 0; i < entities.num_elements; i++)
 		entities.buffer[i]->Update(entities, player, i);
@@ -291,7 +291,7 @@ void World::Help() const
 	printf("To see the commands: help.\nTo end game: quit.\n\n");
 }
 
-void World::Tutorial() const
+void World::Tutorial()
 {
 	printf("--------------------------------------------------------------------------------------------------------\n");
 	printf("                                    WELCOME TO LILI'S ADVENTURE                                         \n");
@@ -302,24 +302,38 @@ void World::Tutorial() const
 	clock_t end_time = 3 * 1000 + clock();
 	while (clock() < end_time) {}
 
-	for (int i = 0; i < 3; i++)
-	{
-		String str = ("*Ring...*");
-		str.SlowPrint(200);
-	}
+	SlowPrint("*Ring...* ", 200);
+	SlowPrint("*Ring...* ", 200);	
+	SlowPrint("*Ring...*\n", 200);
 
-	String str = ("\n- Dad: Lili? Is that you? Thank god you are alive! You have to get out of this island RIGHT NOW!\n"
-	              "- Lili: Wh-why? Whe-where am I?\n"
-	              "- Dad: You are at Makalu Island, your plane crashed yesterday. All the media is talking about you!\n"
-		          "*Lili looks at her arm. It is bleeding a lot.*\n"
-		          "- Dad: Meet me at the peak of the mountain in 20 minutes. Don't ask me why, you have to hurry Lili.\n"
-	              "- Lili: Dad... I'm scared. I can't do this alone, I don't even know what to do!\n"
-	              "- Dad: Of course you can! You can ask me for help whatever you want Lili. Just don't leave this call.\n" 
-		          "       I'm here with you honey. Be brave. Now... RUN!\n\n"
-	
-	              "*Remember to type help if you want to talk with Dad*\n\n");
+	SlowPrint("- Dad: Lili? Is that you? Thank god you are alive! You have to get out of this island RIGHT NOW!\n", 100);
+	SlowPrint("- Lili: Wh-why? Whe-where am I?\n", 100);
+	SlowPrint("- Dad: You are at Makalu Island, your plane crashed yesterday. All the media is talking about you!\n", 100);
+	SlowPrint("*Lili looks at her arm. It is bleeding a lot.*\n", 100);
+	SlowPrint("- Dad: Meet me at the peak of the mountain in 20 minutes. Don't ask me why, you have to hurry Lili.\n", 100);
+	SlowPrint("- Lili: Dad... I'm scared. I can't do this alone, my arm hurts and I don't know what to do!\n", 100);
+	SlowPrint("- Dad: Of course you can! You can ask me for help whatever you want Lili. Just don't leave this call.\n", 100);
+	SlowPrint("       I'm here with you honey. Be brave. Now... RUN!\n\n", 100);
 
-	str.SlowPrint(100);
+	SlowPrint("*Remember to type help if you want to talk with Dad*\n\n");
 
 	player->Update(entities);
+}
+
+void World::SlowPrint(const char* message, uint milis_per_char)
+{
+	String str = message;
+
+	for (int i = 0; i < str.Length(); i++)
+	{
+		if (!_kbhit())
+		{
+			clock_t end_time = milis_per_char + clock(); // 1st num == seconds of delay
+			while (clock() < end_time) {}
+		}
+
+		printf("%c", str.string[i]);
+	}
+
+	_getch();
 }

@@ -11,7 +11,7 @@ int main()
 	Island.Tutorial();
 
 	do{
-		if (!_kbhit()) Island.Call_Update();
+		if (!_kbhit()) Island.CallUpdate();
 		else Island.Ask();
 		
 	} while ((Island.player->curr_pos->name != "Makalu's Peak") && (Island.stop == 0) && (Island.player->hp > 0));

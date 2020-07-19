@@ -111,17 +111,3 @@ const String& String::operator= (const char *other)
 	return *this;
 }
 
-void String::SlowPrint(unsigned int milis_per_char)
-{
-	for (int i = 0; i < mem_size; i++)
-	{
-		if (!_kbhit())
-		{
-			clock_t end_time = milis_per_char + clock(); // 1st num == seconds of delay
-			while (clock() < end_time) {}
-		}
-
-		printf("%c", string[i]);
-	}
-}
-
