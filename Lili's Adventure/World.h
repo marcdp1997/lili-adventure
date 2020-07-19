@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <time.h>  
+#include <stdlib.h>
 #include "Entity.h"
 
 class Player;
@@ -21,7 +22,7 @@ public:
 	World();
 	virtual ~World();
 	void Ask();
-	void Help() const;
+	void CallDad();
 	void Tutorial();
 	void CallUpdate();
 	void SlowPrint(const char* message, uint milis_per_char = 35);

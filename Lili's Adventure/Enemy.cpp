@@ -46,7 +46,7 @@ void Enemy::Move(const Vector<Entity*>& Entities)
 			int decision = rand() % 20;
 
 			// The enemy is in each room a different period of time because of the condition.
-			if (p->source == curr_pos && decision == 1 && p->destination->name != "Dunedin Gates")
+			if (p->source == curr_pos && decision == 1 && p->destination->name != "Crashed Airplane" && p->destination->name != "Dunedin Gates")
 				curr_pos = p->destination;
 		}
 	}

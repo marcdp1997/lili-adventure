@@ -10,20 +10,20 @@ World::World()
 {
 	// Rooms
 	Room* crashed_airplane = new Room("Crashed Airplane", "Your plane had landed here. First area of your adventure");
-	Room* lake = new Room("Lake", "Big lake with some fish.\nA river ends with a strong current in the west part");
-	Room* jungle1 = new Room("Jungle", "Trees and two small paths.\nBehind those trees there is a river going from south to west, but you can't\ngo there");
-	Room* middle = new Room("Middle of Nowhere", "You are in a huge field.\nTo the east you can see a big mountain");
+	Room* lake = new Room("Lake", "Big lake with some fish. A river ends with a strong current in the west part");
+	Room* jungle1 = new Room("Jungle", "Trees and two small paths. Behind those trees there is a river going from south to west, but you can't go there");
+	Room* middle = new Room("Middle of Nowhere", "You are in a huge field. To the east you can see a big mountain");
 	Room* mayan = new Room("Mayan Temple", "There is a deteriorated but beautiful Mayan temple");
 	Room* jungle3 = new Room("Jungle", "Trees");
-	Room* jungle2 = new Room("Jungle", "Trees and two small paths.\nThere is a river to the south behind those trees, but you can't go there.\nYou can see a mountain from this area");
-	Room* peak = new Room("Makalu's Peak", "You arrived at the end of the map, congratulations!\nA helicopter picked you up to take you home");
+	Room* jungle2 = new Room("Jungle", "Trees and two small paths. There is a river to the south behind those trees, but you can't go there. You can see a mountain from this area");
+	Room* peak = new Room("Makalu's Peak", "You arrived at the end of the map, congratulations! A helicopter picked you up to take you home");
 	Room* campsite = new Room("Campsite", "Here you can rest and get warmed");
-	Room* dunedin = new Room("Dunedin Gates", "This is the path that would guide you to the peak.\nThe river lets you here and you can't go back. The current is strong.\nA huge gates are in the north");
-	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls.\nThere is a merch in this area to buy or sell items");
-	Room* cave = new Room("Cave", "You are in a cave located behind the waterfall.\nThere are prehistoric paintings in the walls");
+	Room* dunedin = new Room("Dunedin Gates", "This is the path that would guide you to the peak. The river lets you here and you can't go back. The current is strong. A huge gates are in the north");
+	Room* lookout = new Room("Lookout", "Such a beautiful views! You can see practically all the island and, in the east, an amazing waterfalls. There is a merch in this area to buy or sell items");
+	Room* cave = new Room("Cave", "You are in a cave located behind the waterfall. There are prehistoric paintings in the walls");
 	Room* chamber = new Room("Hidden chamber", "Small and cute chamber with nothing important");
 	Room* waterfalls = new Room("Waterfalls", "A majestic waterfalls are in the south of this area. They aren't so high to jump from");
-	Room* bottom = new Room("Bottom of the waterfalls", "There are lots of corpses floating.\nThe water creates a river to the east part.\nIt could end up in an interesting place");
+	Room* bottom = new Room("Bottom of the waterfalls", "There are lots of corpses floating. The water creates a river to the east part. It could end up in an interesting place");
 
 	entities.pushback(crashed_airplane);
 	entities.pushback(lake);
@@ -261,7 +261,7 @@ void World::Ask()
 		if (!player->Drink()) printf("Potion is not in your inventory.\n\n");
 	}
 
-	else if (tokens.buffer[0] == "help") Help();
+	else if (tokens.buffer[0] == "call" && tokens.buffer[1] == "dad") CallDad();
 
 	else if (tokens.buffer[0] == "quit") stop = 1;
 
@@ -274,21 +274,50 @@ void World::CallUpdate()
 		entities.buffer[i]->Update(entities, player, i);
 }
 
-void World::Help() const
+void World::CallDad()
 {
-	printf("To move: move (north, south, east, west).\nTo look: look (north, south, east, west, room).\n");
-	printf("To pick items: pick (name of the item).\nTo drop items: drop (name of the item).\n");
-	printf("To see the inventory: inventory / i (only name of the items) or\nlook inventory / look i (name and description).\n");
-	printf("To see the bag: bag / b (to see name of the items).\n");
-	printf("To equip item: equip (name of the item).\nTo unequip item: unequip (name of the item).\n");
-	printf("To get an item from other: get (name of the item) from (name of the item).\nTo put an item into other: put (name of the item) into (name of the item).\n");
-	printf("To turn on GPS: turn on gps.\n");
-	printf("To drink potion: drink potion.\n");
-	printf("To close/open gates: open (or open gates), close (or close gates).\n");
-	printf("To buy/sell items: buy / sell (name of the item) from merchant.\n");
-	printf("To see the items available to buy: buy (name of the item).\n");
-	printf("To see your coins: coins / c.\nTo see your hp: hp.\n");
-	printf("To see the commands: help.\nTo end game: quit.\n\n");
+	printf("\n--------------------------------------------------------------------------------------------------------\n");
+
+	// Motivational quotes
+	int quote = rand() % 4;
+
+	SlowPrint("*Calling", 100);
+	SlowPrint("......*\n", 400);
+	switch (quote)
+	{
+		case 0: SlowPrint("Dad: Breath Lili, you are going to be okey. ", 100); break;
+		case 1: SlowPrint("Dad: You can do it honey! ", 100); break;
+		case 2: SlowPrint("Dad: Keep going love, you almost have it. ", 100); break;
+		case 3: SlowPrint("Dad: I will take you home Lili, I prommise. ", 100); break;
+	}
+	SlowPrint("I'm sending all the commands. Check your phone.\n", 100);
+	SlowPrint("*Sending", 100);
+	SlowPrint("......*\n", 400);
+	SlowPrint("*Received!*\n\n");
+
+	// Commands
+	printf("To move: 'move (north, south, east or west)'.\n");
+	printf("To look: 'look (north, south, east, west or room)'.\n");
+	printf("To pick items: 'pick (name of the item)'.\n");
+	printf("To drop items: 'drop (name of the item)'.\n");
+	printf("To see the inventory: 'inventory' and 'i', to see only name of the items, or 'look inventory' and 'look i', to see name and description.\n");
+	printf("To see the bag: 'bag' and 'b' to see name of the items.\n");
+	printf("To equip item: 'equip (name of the item)'.\n");
+	printf("To unequip item: 'unequip (name of the item)'.\n");
+	printf("To get an item from other: 'get (name of the item) from (name of the item)'.\n");
+	printf("To put an item into other: 'put(name of the item) into(name of the item)'.\n");
+	printf("To turn on GPS: 'turn on gps'.\n");
+	printf("To drink potion: 'drink potion'.\n");
+	printf("To close/open gates: 'open' and 'open gates' or 'close' and 'close gates'.\n");
+	printf("To buy items: 'buy (name of the item) from merchant'.\n");
+	printf("To sell items: 'sell (name of the item) from merchant'.\n");
+	printf("To see the items available to buy: 'talk merchant'.\n");
+	printf("To see your coins: 'coins' and 'c'.\n");
+	printf("To see your hp: 'hp'.\n");
+	printf("To see the commands: 'call dad'.\n");
+	printf("To end game: 'quit'.\n\n");
+
+	printf("--------------------------------------------------------------------------------------------------------\n\n");
 }
 
 void World::Tutorial()
@@ -306,16 +335,15 @@ void World::Tutorial()
 	SlowPrint("*Ring...* ", 200);	
 	SlowPrint("*Ring...*\n", 200);
 
-	SlowPrint("- Dad: Lili? Is that you? Thank god you are alive! You have to get out of this island RIGHT NOW!\n", 100);
+	SlowPrint("- Dad: Lili? Is that you? Thank god you are alive! You have to get out of here RIGHT NOW!\n", 100);
 	SlowPrint("- Lili: Wh-why? Whe-where am I?\n", 100);
-	SlowPrint("- Dad: You are at Makalu Island, your plane crashed yesterday. All the media is talking about you!\n", 100);
-	SlowPrint("*Lili looks at her arm. It is bleeding a lot.*\n", 100);
+	SlowPrint("- Dad: You are at Makalu Island, your plane crashed yesterday. Don't you remember? All the media is talking about this!\n", 100);
+	SlowPrint("*Lili looks at her arm. It is bleeding a lot.*\n", 50);
 	SlowPrint("- Dad: Meet me at the peak of the mountain in 20 minutes. Don't ask me why, you have to hurry Lili.\n", 100);
-	SlowPrint("- Lili: Dad... I'm scared. I can't do this alone, my arm hurts and I don't know what to do!\n", 100);
-	SlowPrint("- Dad: Of course you can! You can ask me for help whatever you want Lili. Just don't leave this call.\n", 100);
-	SlowPrint("       I'm here with you honey. Be brave. Now... RUN!\n\n", 100);
+	SlowPrint("- Lili: Dad... I'm scared. I can't do this alone, my arm hurts a-and I don't know what to do.\n", 100);
+	SlowPrint("- Dad: Of course you can! You can ask me for help whenever you want Lili. Just call me.\n       I'm here with you honey. Be brave. Now... RUN!\n\n", 100);
 
-	SlowPrint("*Remember to type help if you want to talk with Dad*\n\n");
+	SlowPrint("*Remember to type 'call dad' if you want to talk with Dad*\n\n");
 
 	player->Update(entities);
 }
@@ -335,5 +363,5 @@ void World::SlowPrint(const char* message, uint milis_per_char)
 		printf("%c", str.string[i]);
 	}
 
-	_getch();
+	if (_kbhit()) _getch();
 }
