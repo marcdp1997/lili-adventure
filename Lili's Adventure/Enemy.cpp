@@ -58,8 +58,8 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 
 	while (p->hp > 0 && hp > 0)
 	{
-		if (p->hp > 0) Player_Attack(p);
-		if (hp > 0) Goblin_Attack(p);
+		if (p->hp > 0) Player_Attack(p, 1);
+		if (hp > 0) Goblin_Attack(p, 1);
 	}
 
 	if (p->hp == 0 && hp > 0) printf("You are dead!\nGAME OVER\n\n");
@@ -72,10 +72,9 @@ void Enemy::Combat(Vector<Entity*>& Entities, Player* p, uint i)
 	}
 }
 
-void Enemy::Player_Attack(Player* p)
+void Enemy::Player_Attack(Player* p, float delay)
 {
-	clock_t start_time = clock();
-	clock_t end_time = 1 * 1000 + start_time; // 1st num == seconds of delay
+	clock_t end_time = delay * 1000 + clock(); // 1st num == seconds of delay
 	while (clock() < end_time){}
 
 	if (hp > p->damage) hp -= p->damage;
@@ -91,10 +90,9 @@ void Enemy::Player_Attack(Player* p)
 
 }
 
-void Enemy::Goblin_Attack(Player* p)
+void Enemy::Goblin_Attack(Player* p, float delay)
 {
-	clock_t start_time = clock();
-	clock_t end_time = 1 * 1000 + start_time;
+	clock_t end_time = delay * 1000 + clock();
 	while (clock() < end_time){}
 
 	// Set damage depending on the item equipped

@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <time.h>  
 #include "Entity.h"
 
 class Player;

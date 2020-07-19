@@ -293,9 +293,33 @@ void World::Help() const
 
 void World::Tutorial() const
 {
-	printf("Welcome survivor!\nYour plane had landed here a few days ago.\nYou were unconscious but now you have woken up.\nIt's time to explore this island and arrive to the peak.\n");
-	printf("Remember to type 'help' if you want to see the commands during your adventure!\n");
-	printf("Good luck!\n\n");
+	printf("--------------------------------------------------------------------------------------------------------\n");
+	printf("                                    WELCOME TO LILI'S ADVENTURE                                         \n");
+	printf("                 *You can skip every text by pressing any key of your keyboard*                         \n");
+	printf("                             Your adventure is about to start, enjoy!                                   \n");
+	printf("--------------------------------------------------------------------------------------------------------\n\n");
+
+	clock_t end_time = 3 * 1000 + clock();
+	while (clock() < end_time) {}
+
+	for (int i = 0; i < 3; i++)
+	{
+		String str = ("*Ring...*");
+		str.SlowPrint(200);
+	}
+
+	String str = ("\n- Dad: Lili? Is that you? Thank god you are alive! You have to get out of this island RIGHT NOW!\n"
+	              "- Lili: Wh-why? Whe-where am I?\n"
+	              "- Dad: You are at Makalu Island, your plane crashed yesterday. All the media is talking about you!\n"
+		          "*Lili looks at her arm. It is bleeding a lot.*\n"
+		          "- Dad: Meet me at the peak of the mountain in 20 minutes. Don't ask me why, you have to hurry Lili.\n"
+	              "- Lili: Dad... I'm scared. I can't do this alone, I don't even know what to do!\n"
+	              "- Dad: Of course you can! You can ask me for help whatever you want Lili. Just don't leave this call.\n" 
+		          "       I'm here with you honey. Be brave. Now... RUN!\n\n"
+	
+	              "*Remember to type help if you want to talk with Dad*\n\n");
+
+	str.SlowPrint(100);
 
 	player->Update(entities);
 }

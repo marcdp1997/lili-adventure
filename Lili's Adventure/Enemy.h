@@ -18,8 +18,8 @@ private:
 	void Move(const Vector<Entity*>& Entities);
 	void Combat(Vector<Entity*>& Entities, Player* p, uint i);
 
-	void Player_Attack(Player* p);
-	void Goblin_Attack(Player* p);
+	void Player_Attack(Player* p, float delay);
+	void Goblin_Attack(Player* p, float delay);
 };
 
 #endif

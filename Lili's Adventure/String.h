@@ -2,6 +2,7 @@
 #define STRING_H
 
 #include <string.h>
+#include <conio.h>
 #include "Vector.h"
 
 class String
@@ -23,7 +24,7 @@ public:
 	bool operator!= (const String& other) const;
 	const String& operator= (const char* str); 
 	void Tokenize(Vector<String>& tokens);
-	void GetWord(const int num);
+	void SlowPrint(unsigned int milis_per_char);
 };
 
 #endif
