@@ -8,6 +8,9 @@ v1.0
 Now there are enemies that move freely and randomly trough all the areas! Be sure to equip the best items in the three different slots available (shield, weapon and clothes). Items have different characteristics, for example: the hood makes you invisible and inmune to enemies attacks, the potion adds 5 to your HP, the shield reduces the damage received, the sword increases your attack, and so on. Also you have HP and coins to spend in the items that a merchant located in lookout area has. Sell items or kill enemies to earn coins.
 Play to discover all the new features!  
 
+v1.1
+Added lore and improved tutorial. Now text displays slowly and you can skip each sentence by pressing any key.
+
 Commands:  
 - To move: 'move (north, south, east or west)'.
 - To look: 'look (north, south, east, west or room)'.
@@ -30,5 +33,5 @@ Commands:
 - To see the commands: 'call dad'.
 - To end game: 'quit'.
 
-Github repository: https://github.com/marcdp1997/Zork  
+Github repository: https://github.com/marcdp1997/lili-adventure  
 Author: Marc de Pedro.

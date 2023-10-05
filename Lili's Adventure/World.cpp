@@ -288,7 +288,7 @@ void World::CallDad()
 		case 0: SlowPrint("Dad: Breath Lili, you are going to be okey. ", 100); break;
 		case 1: SlowPrint("Dad: You can do it honey! ", 100); break;
 		case 2: SlowPrint("Dad: Keep going love, you almost have it. ", 100); break;
-		case 3: SlowPrint("Dad: I will take you home Lili, I prommise. ", 100); break;
+		case 3: SlowPrint("Dad: I will take you home Lili, I promise. ", 100); break;
 	}
 	SlowPrint("I'm sending all the commands. Check your phone.\n", 100);
 	SlowPrint("*Sending", 100);
@@ -337,7 +337,7 @@ void World::Tutorial()
 
 	SlowPrint("- Dad: Lili? Is that you? Thank god you are alive! You have to get out of here RIGHT NOW!\n", 100);
 	SlowPrint("- Lili: Wh-why? Whe-where am I?\n", 100);
-	SlowPrint("- Dad: You are at Makalu Island, your plane crashed yesterday. Don't you remember? All the media is talking about this!\n", 100);
+	SlowPrint("- Dad: You are at Makalu Island, your plane crashed yesterday. Don't you remember? The news are talking about this all the time!\n", 100);
 	SlowPrint("*Lili looks at her arm. It is bleeding a lot.*\n", 50);
 	SlowPrint("- Dad: Meet me at the peak of the mountain in 20 minutes. Don't ask me why, you have to hurry Lili.\n", 100);
 	SlowPrint("- Lili: Dad... I'm scared. I can't do this alone, my arm hurts a-and I don't know what to do.\n", 100);
